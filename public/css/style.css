@@ -1,0 +1,475 @@
+@font-face {
+    font-family: brandon;
+    src: url('./Brandon_reg.otf');
+}
+
+@font-face {
+	font-family: avenirl;
+	src: url('./Avenir_Light.otf');
+}
+
+@font-face {
+	font-family: avenirh;
+	src: url('./AvenirLTStd-Heavy.woff');
+}
+
+.iframevd video {
+    box-sizing: border-box;
+    background: url('../images/empty_iphone.png') center center no-repeat;
+    background-size: contain;
+	margin-top: 5px;
+	padding: 50px 22px 0px 17px;
+	max-height: 497px;
+	width: 100%;
+	margin-bottom: -5px;
+	z-index: 0;
+	position: relative;
+}
+
+.iframevd2 video {
+    box-sizing: border-box;
+    background: url('../images/empty_iphone_full.png') center center no-repeat;
+    background-size: contain;
+	padding: 60px 10px 70px 10px;
+	height: 506px;
+	z-index: 0;
+	position: relative;
+}
+
+h2 a, h2 a:hover, h2 a:active {
+	color: black;
+	font-size: 12px;
+}
+
+h6 {
+	font-size: 28px;
+}
+
+.btnlink {
+	color: #45DD90;
+}
+
+.btnlink:hover {
+	color: white;
+}
+
+.fb_dialog, .fb_reset {position: fixed !important;z-index: 10000 !important;}
+
+.temoigns {
+	font-size: 20px;
+}
+
+.vignettes {
+	font-size: 14px;
+}
+
+nav {
+	font-family: brandon !important;
+}
+
+html {
+	font-family: brandon !important;
+}
+
+.btn-green {
+	background-color: #45DD90;
+	color: white;
+	font-family: brandon;
+	border-radius: 0;
+	font-size: 18px;
+	width: 100%;
+	overflow: hidden;
+}
+
+.lightgreybg {
+	background-color: rgba(96, 94, 94, 0.1) !important;
+}
+
+.hellomarcel {
+	height: 30px;
+	padding-bottom: 4px;
+	padding-left: 20px;
+	object-fit: cover;
+}
+
+.msgaccroche {
+	font-size: 20px;
+	padding-left: 10px;
+	padding-right: 20px;
+}
+
+.accroche {
+    float: left;
+    clear: none;
+	background-color: #fff !important;
+	position: fixed !important;
+	z-index: 9999 !important;
+	filter: drop-shadow(0px 3pt 12pt rgba(0, 0, 0, 0.15));
+	border-radius: 50px;
+	font-size: 20px;
+	padding: 20px 0px 20px 0px;
+	bottom: 16px;
+	right: 100px;
+}
+
+.accroche:after, .accroche:before {
+    content: ' ';
+    position: absolute;
+    border: 15px solid transparent;
+	transform: rotate(45deg);
+    right: -1px;
+}
+
+.accroche:before {
+    border-top-color: #fff;
+    border-right-color: #fff;
+}
+
+.accroche:after {
+    border-top-color: #fff;
+    border-right-color: #fff;
+}
+
+.fa-quote-left {
+	font-size: 5vw !important;
+	color: white;
+}
+
+.fa-whois {
+	font-size: 5vw !important;
+}
+
+strong {
+	font-weight: normal;
+}
+
+.form-control {
+	border-radius: 0;
+	font-size: 18px;
+	height: 40px;
+}
+
+#bg {
+	z-index: -50;
+	position: fixed;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+}
+
+#bg img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	min-width: 50%;
+	min-height: 50%;
+}
+
+h1 {
+	font-size:48px;
+	font-family: brandon;
+}
+
+h2 {
+	font-size:22px;
+	font-family: avenirh;
+}
+
+.fa-star, .fa-star-o {
+	margin-top: 5px;
+	font-size: 2.4vw !important;
+	margin-right: 6px;
+	color: #FFEB5D;
+}
+
+.fa-star-o {
+	color: rgba(160, 160, 159, 1);
+}
+
+.btn-white {
+	background-color: white;
+	color: #7DEFB4;
+	font-family: brandon;
+	border-radius: 0;
+	font-size: 18px;
+}
+
+.btn-white:hover {
+	background-color: white;
+	color: #45DD90;
+	font-family: brandon;
+	border-radius: 0;
+	font-size: 18px;
+}
+
+span {
+	color: #605e5e;
+	font-size: 18px;
+	font-family: avenirl;
+}
+
+.navlink {
+	color: white !important;
+	font-size: 1.3vw;
+}
+
+.avis {
+	height: 330px;
+}
+
+.temoignagespan {
+	font-size: 14px;
+	font-family: avenirl;
+	color: rgba(160, 160, 159, 1);
+}
+
+h4 {
+	font-family: brandon !important;
+}
+
+input {
+	font-family: brandon;
+}
+
+.footerelem {
+	top: 0;
+}
+
+.navbar {
+	background-color: rgba(0, 0, 0, 0);
+	border: 0;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+.borders {
+	border-right: 1px solid rgba(0, 0, 0, 0.2);
+	border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.navlink:hover {
+	color: #45DD90 !important;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.footerlink {
+	color: white;
+}
+
+.footerlink:hover {
+	color: white;
+}
+
+.footerlink2 {
+	color: #309964;
+}
+
+.footerlink2:hover {
+	color: #309964;
+}
+
+.part {
+	height: 580px;
+}
+
+.title {
+	width: 240px;
+	object-fit: cover;
+	margin-bottom: -30px;
+	padding-bottom: 10px;
+}
+
+.fb_dialog {
+	position: relative;
+}
+
+.whitebg {
+	background-color: white;
+}
+
+.greenbg {
+	background-color: #7DEFB4;
+	padding-top: 10px;
+}
+
+.inputfooter {
+	background-color: rgba(255,255,255,0.4590163934426229);
+	border: 0;
+	color: white !important;
+}
+
+.inputfooter::placeholder {
+	color: white !important;
+}
+
+.greybg {
+	margin-top: 40px;
+	background-color: rgba(96,94,94,0.2);
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.cgu {
+	background-color: #FAFAFA;
+}
+
+.avis {
+	padding-top: 30px;
+	padding-bottom: 30px;
+    border-bottom-left-radius: 55px;
+}
+
+.redbg {
+	background-color: #F2496A;
+	padding-bottom: 20px;
+	padding-top: 30px;
+	padding-left: 30px;
+	padding-right: 30px;
+	min-height: 546px;
+}
+
+.buttongo {
+	font-family: avenirl;
+	border-radius: 30px;
+	width: 123px;
+	height: 46px;
+	margin: auto;
+	color: black !important;
+	padding-top: 12px;
+	margin-bottom: 0px;
+}
+
+.buttongo:hover {
+	color: white !important;
+	background-color: lightgrey;
+}
+
+.nav {
+	font-size: 18px !important;
+}
+
+.green {
+	color: #45DD90 !important;
+}
+
+.white {
+	color: white;
+}
+
+.h2white {
+	font-family: avenirh;
+	font-size: 22px;
+}
+
+.h1white {
+	font-family: avenirl;
+	font-size: 36px;
+}
+
+body {
+	font-family: brandon;
+}
+
+@media (max-width:1200px) {
+	.avis {
+		height: 290px;
+	}
+}
+
+@media (max-width:990px) {
+	.avis {
+		height: 100%;
+	}
+}
+
+@media (min-width:0px) and (max-width:767px) {
+
+	.h1white {
+		font-size: 28px;
+	}
+
+	.h2white {
+		font-size: 18px;
+	}
+
+	.iframevd video {
+	    box-sizing: border-box;
+	    background: url('../images/empty_iphone.png') center center no-repeat;
+	    background-size: contain;
+		margin-top: 5px;
+		padding: 30px 22px 0px 17px;
+		max-height: 300px;
+		width: 100%;
+		margin-bottom: -5px;
+		z-index: 0;
+		position: relative;
+	}
+
+	.msgaccroche { font-size: 13px; }
+
+	.hellomarcel { height: 20px; }
+
+	h1 { font-size: 40px; }
+
+	h2 { font-size:24px; }
+
+	h4 { font-size:24px; }
+
+	h6 { font-size:22px; }
+
+	.temoigns {
+		font-size: 3vw;
+	}
+
+	span { font-size: 22px; }
+
+	span.white {
+		font-size: 16px;
+	}
+
+	.form-control { font-size: 22px; }
+
+	#bg { left: -100%; }
+
+	.navlink { font-size: 3.5vw; }
+
+	.fa-star, .fa-star-o { font-size: 5vw !important; }
+
+	.fa-quote-left { font-size: 9vw !important; }
+
+	.temoignagespan { font-size: 18px; }
+}
+
+@media (max-width: 990px) {
+	.text-xs-center { text-align: center; }
+
+	.fa-whois { font-size: 9vw !important; }
+}
+
+@media (min-width: 990px) {
+	.disabled-xs  { display: none; }
+}
+
+@media (max-width: 425px) {
+
+	.accroche:after, .accroche:before { border: 12px solid transparent; }
+
+	#bg { left: -220%; }
+
+	.form-control::placeholder { font-size: 14px; }
+
+	.btn-green { font-size: 12px; }
+}

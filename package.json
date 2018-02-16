@@ -1,0 +1,35 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "Hello Marcel, le chatbot des parents pour les enfants",
+  "main": "index.js",
+  "scripts": {
+    "restart": "pm2 startOrRestart ecosystem.config.js",
+    "deploy": "pm2 deploy ecosystem.config.js production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmisiti42/hellomarcel-landing.git"
+  },
+  "author": "jmisiti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmisiti42/hellomarcel-landing/issues"
+  },
+  "homepage": "https://github.com/jmisiti42/hellomarcel-landing#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "helmet": "^3.9.0",
+    "mailchimp-api-v3": "^1.8.0",
+    "nodemailer": "^4.4.1",
+    "path": "^0.12.7",
+    "request": "^2.83.0",
+    "superagent": "^3.8.2"
+  },
+  "devDependencies": {
+    "pm2": "^2.9.1"
+  }
+}
