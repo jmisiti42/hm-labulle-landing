@@ -2,6 +2,7 @@ const express				= require('express');
 const bodyParser			= require('body-parser');
 const http					= require('http');
 const config				= require('./config/production.json');
+const userController		= require('./controller/userController');
 const app					= express();
 const validateEmail			= (email) => {
 	const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

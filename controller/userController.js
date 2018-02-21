@@ -1,4 +1,4 @@
-const UserController  = () => {
+const UserController = function () {
 	this.checkAuth = (req, res, next) => {
 		if (!req.session || !req.session.authenticated) {
 			res.send('oops');
