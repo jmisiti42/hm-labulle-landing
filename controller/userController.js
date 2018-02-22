@@ -3,7 +3,12 @@ require("../models/User");
 const config				= require('../config/production.json');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
-mongoose.connect(config.uri);
+mongoose.connect((config.uri));
+let db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+	console.log("connected");
+});
 
 const UserController = function () {
 	this.isLoggedIn = (req, res, next) => {
