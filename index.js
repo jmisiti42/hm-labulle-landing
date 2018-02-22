@@ -1,4 +1,3 @@
-const mongoose 				= require('mongoose');
 const express				= require('express');
 const bodyParser			= require('body-parser');
 const http					= require('http');
@@ -11,7 +10,6 @@ const app					= express();
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-mongoose.connect(config.uri);
 
 app.set('view engine', 'ejs');
 app.disable('x-powered-by');
