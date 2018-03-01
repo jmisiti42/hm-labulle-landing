@@ -2,23 +2,205 @@
 <html>
   <head>
 	  <meta name="viewport" content="width=device-width" />
-	  <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico"/>
+	  <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico"/>
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	  <link rel="stylesheet" href="./css/style.css">
-	  <link rel="stylesheet" href="./css/fontawesome/web-fonts-with-css/css/fontawesome.min.css">
-	  <!-- Script customer chat à laisser en haut du fichier ! -->
-	  <script src="./javascript/customerChat.js"></script>
+	  <link rel="stylesheet" href="../css/style.css">
+	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/mediaelement@4.2.8/build/mediaelementplayer.min.css">
 	  <meta name="description" content="La Bulle, le nouveau programme audio d’Hello Marcel qui permet aux parents en quelques minutes par jour de se poser et réfléchir sur des questions de parentalité du quotidien." />
 	  <meta name="keywords" content="hello marcel, concentration, autonomie, la bulle, parentalité, audio, podcast, famille, enfant, conseil, programme, media, coach" />
 	  <title>La Bulle</title>
   </head>
 	<body>
-		
+		<% if (typeof user == 'undefined') { %>
+		<div style="z-index: 90000000000;" class="modal fade" id="modalAuth" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Se connecter / S'inscrire :</h4>
+					</div>
+					<div class="modal-body">
+						<input type="email" required name="mail" class="form-control" id="inputEmail" placeholder="Votre mail"/>
+						<br>
+						<input type="password" required name="password" class="form-control" id="inputPassword" placeholder="Votre mot de passe"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" onclick="signin();" data-dismiss="modal" class="btn btn-default">Se connecter</button>
+						<button type="button" onclick="signup();" data-dismiss="modal" class="btn btn-default">S'inscrire</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div style="z-index: 90000000000;" class="modal fade" id="modalPassword" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Récuperation de mot de passe :</h4>
+					</div>
+					<div class="modal-body">
+						<p hidden class="alert alert-danger" id="resPwdReset"></p>
+						<input type="email" required name="mail" class="form-control" id="inputMailPassword" placeholder="Votre mail"/>
+					</div>
+					<div class="modal-footer">
+						<button type="button" onclick="getPassword();" class="btn btn-default">Je récupère mon mot de passe.</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<% } else if (typeof user !== 'undefined') { %>
+		<div style="z-index: 90000000000;" class="modal fade" id="modalAccount" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Gérer son compte</h4>
+					</div>
+					<div class="modal-body">
+						<form action="/edit/mail" id="formEdit" method="post">
+							<input required type="email" name="mail" class="form-control" value="<%= user.mail  %>" placeholder="Votre mail"/>
+							<br />
+							<div class="text-center">
+								<button type="submit" form="formEdit" value="Je change mon addresse mail" class="text-center btn btn-default">Je change mon addresse mail</button>
+							</div>
+						</form>
+						<br />
+						<br />
+						<form action="/edit/password" id="formPassword" method="post">
+							<input required type="password" name="oldPassword" class="form-control" placeholder="Ancien mot de passe"/>
+							<br />
+							<input required type="password" name="password" class="form-control" placeholder="Nouveau mot de passe"/>
+							<br />
+							<div class="text-center">
+								<button type="submit" form="formPassword" value="Je change mon mot de passe" class="btn btn-default">Je change mon mot de passe</button>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<p class="text-center">Changer vos informations vous déconnectera.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<% } %>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-6"><h1 class="title"><a class="no-decorations" href="/">Hello Marcel</a></h1></div> <!-- TITRE HELLO MARCEL -->
+				<% if (typeof user !== 'undefined') { %>
+					<div class="col-xs-6"><span class="user-interface"><%= user.mail %><br /><a href="/logout">Se déconnecter</a> &nbsp; &nbsp; <a data-toggle="modal" data-target="#modalAccount" href="#">Gérer</a></span></div> <!-- INTERFACE USER TODO -->
+				<% } %>
+			</div> <!-- HEADER -->
+
+			<% if (typeof msg !== 'undefined') { %>
+				<div class="alert alert-danger fade in">
+	  				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<% msg.forEach((message) => { %>
+						<strong>Attention : </strong><%= message %><br>
+					<% }); %>
+				</div>
+			<% } %>
+			<% if (typeof msgOk !== 'undefined') { %>
+				<div class="alert alert-success fade in">
+	  				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+					<% msgOk.forEach((message) => { %>
+						<%= message %><br>
+					<% }); %>
+				</div>
+			<% } %>
+
+			<hr />
+			<div class="row">
+				<div class="<% if (typeof user !== 'undefined') { %>col-xs-12<% } else { %>col-md-7<% } %>">
+					<div class="row">
+						<div class="col-xs-2"><img class="hm-logo" src="../images/hm-logo.jpg" /></div> <!-- LOGO -->
+						<div class="col-xs-10">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+							<br />
+							<audio id="player2" width="100%" src="../audios/presentation.mp3" preload="auto" type="audio/mpeg" height="40"></audio>
+						</div> <!-- TEXT / AUDIO -->
+					</div>
+				</div> <!-- INFOS -->
+				<% if (typeof user == 'undefined') { %>
+					<div class="text-center col-md-5">
+						<form action="/auth" method="post">
+							Email :<br />
+							<input required type="email" name="mail"><br />
+							Mot de passe :<br />
+							<input required type="password" name="password"><br /><br />
+	  						<input type="submit" value="Connexion" name="button" />
+							<input type="submit" value="Inscription" name="button" /><br /><br />
+	  						<a data-toggle="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
+						</form>
+					</div> <!-- FORMULAIRE -->
+				<% } %>
+			</div> <!-- INFOS / FORMULAIRE -->
+			<hr />
+			<div class="row">
+				<div class="col-md-6">
+					<div class="row"><div class="col-xs-12"><h2 class="text-center"><!-- TODO -->LA CONCENTRATION</h2></div></div> <!-- TITRE -->
+					<div class="row"><div class="col-xs-offset-4 col-xs-4"><img class="list-img" src="../images/hm-logo.jpg" /></div></div> <!-- IMAGE -->
+					<div class="row"><div class="col-xs-offset-1 col-xs-10"><p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></div></div> <!-- DESCRIPTION -->
+					<!-- TODO FOR LOOP -->
+					<div class="row"><div class="col-xs-offset-1 col-xs-10"><p class="text-center"><i class="fa <%= typeof user == 'undefined' ? 'fa-lock' : 'fa-play-circle' %>" aria-hidden="true"></i>Episode 1 - Lorem ipsum dolor<div style="margin: auto; margin-top: -8px; background-color: lightgrey; width: 38%; height: 2px;"><div style="background-color: #51E99D; width: 80%; height: 2px;"></div></div></p></div></div><!-- EPISODE (1) -->
+				</div><!-- UNE LISTE -->
+			</div> <!-- LISTES -->
+			<hr />
+			<div class="row">
+				<div class="col-xs-offset-4 col-xs-4"><p class="text-center">Questionnaire</p></div>
+			</div>
+			<hr />
+			<div class="row" style="margin-top: 100px;">
+				<div id="playerContainer" class="col-xs-12"><audio id="player" width="100%" src="../audios/presentation.mp3" preload="auto" type="audio/mpeg" height="40"></audio></div> <!-- AUDIO PLAYER -->
+			</div> <!-- FOOTER AUDIO -->
+
+		</div>
 		<!-- Scripts JS -->
-		<script src="./javascript/ap/js/jquery.js"></script>
-		<script src="./javascript/ap/js/audioplayer.js"></script>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script src="http://cdn.jsdelivr.net/npm/mediaelement@4.2.8/build/mediaelement-and-player.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script>
+			jQuery(document).ready(function ($) {
+				$('#player').mediaelementplayer({
+				    success: function (mediaElement) {
+						mediaElement.addEventListener('loadedmetadata', function(){
+	 						mediaElement.setCurrentTime(mediaElement.duration - 0.0001);
+							mediaElement.play();
+					    });
+				     }
+				 });
+ 				$('#player2').mediaelementplayer({
+ 				    success: function (mediaElement) {
+ 						mediaElement.setCurrentTime(0);
+ 				     }
+ 				 });
+			});
+
+			const getPassword = () => {
+				let mail = $('#inputMailPassword').val();
+				if (mail && validateEmail(mail)) {
+					$.post('/repassword', { mail }, (data) => {
+						console.log(data);
+						if (data.error) {
+							$('#resPwdReset').text(data.error);
+							$('#resPwdReset').show();
+						} else {
+							$('#resPwdReset').hide();
+							$('#modalPassword').modal('toggle');
+						}
+					});
+				} else {
+					$('#resPwdReset').text("Veuillez entrer une address mail valide.");
+					$('#resPwdReset').show();
+				}
+			};
+
+			const validateEmail = (email) => {
+				const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				return re.test(email);
+			}
+
+		</script>
 	</body>
 </html>
 

@@ -1,3 +1,8 @@
 {
-	"uri": "mongodb://localhost/marcel"
+	"uri": "mongodb://127.0.0.1/labulle",
+	"secretSession": "coucouhello92",
+	"gmail": {
+        "user": "hellomarcel.contact@gmail.com",
+        "pass": "Hellom@rcel1"
+    }
 }
