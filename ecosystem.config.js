@@ -6,7 +6,7 @@ module.exports = {
 	deploy: {
 		production: {
 		  user: 'ubuntu',
-		  host: '52.59.16.166',
+		  host: '52.29.97.151',
 		  key: '.ssh/hm-bulle.pem',
 		  ref: 'origin/master',
 		  repo: 'git@github.com:jmisiti42/hm-labulle-landing.git',
