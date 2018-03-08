@@ -4,7 +4,7 @@
 	  <meta name="viewport" content="width=device-width" />
 	  <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico"/>
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	  <link rel="stylesheet" href="../css/style.css">
+	  <link rel="stylesheet" href="/css/style.css">
 	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 	  <link rel="stylesheet" href="http://cdn.jsdelivr.net/npm/mediaelement@4.2.8/build/mediaelementplayer.min.css">
 	  <meta name="description" content="La Bulle, le nouveau programme audio d’Hello Marcel qui permet aux parents en quelques minutes par jour de se poser et réfléchir sur des questions de parentalité du quotidien." />
@@ -20,14 +20,27 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title">Se connecter / S'inscrire :</h4>
 					</div>
-					<div class="modal-body">
-						<input type="email" required name="mail" class="form-control" id="inputEmail" placeholder="Votre mail"/>
-						<br>
-						<input type="password" required name="password" class="form-control" id="inputPassword" placeholder="Votre mot de passe"/>
+					<div class="modal-body text-center">
+						<a onclick="toggleForm();" href="#" class="formSwapLink">Créer mon compte</a>
+						&nbsp;
+						<a onclick="toggleForm();" href="#" class="formSwapLink activeLink">Me connecter</a>
+						<br />
+						<br />
+						<form class="formSwapForm" action="/auth" method="post">
+							<input required placeholder="Addresse email" type="email" name="mail"><br />
+							<input required placeholder="Mot de passe" type="password" name="password"><br />
+	  						<input type="submit" value="Connexion" name="button" /> <br />
+							<a data-toggle="modal" data-dismiss="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
+						</form>
+						<form class="formSwapForm" hidden action="/auth" method="post">
+							<input required placeholder="Addresse email" type="email" name="mail"><br />
+							<input required placeholder="Mot de passe" type="password" name="password"><br />
+							<input required placeholder="Confirmer" type="password" name="repassword"><br />
+	  						<input type="submit" value="Inscription" name="button" /><br />
+						</form>
 					</div>
 					<div class="modal-footer">
-						<button type="button" onclick="signin();" data-dismiss="modal" class="btn btn-default">Se connecter</button>
-						<button type="button" onclick="signup();" data-dismiss="modal" class="btn btn-default">S'inscrire</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
 					</div>
 				</div>
 			</div>
@@ -85,12 +98,13 @@
 		</div>
 		<% } %>
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-6"><h1 class="title"><a class="no-decorations" href="/">Hello Marcel</a></h1></div> <!-- TITRE HELLO MARCEL -->
+			<div style="background-color: #51E99D;" class="row">
+				<div class="col-xs-6"><img style="width: 250px; padding-top: 5px;" src="/images/hellomarcel-logo.png" /></div> <!-- TITRE HELLO MARCEL -->
 				<% if (typeof user !== 'undefined') { %>
-					<div class="col-xs-6"><span class="user-interface"><%= user.mail %><br /><a href="/logout">Se déconnecter</a> &nbsp; &nbsp; <a data-toggle="modal" data-target="#modalAccount" href="#">Gérer</a></span></div> <!-- INTERFACE USER TODO -->
+					<div class="col-xs-6"><span class="user-interface"><%= user.mail %><br /><a href="/logout">Se déconnecter</a> &nbsp; &nbsp; <a data-toggle="modal" data-target="#modalAccount" href="#">Gérer</a><% if (user.admin == true) { %>&nbsp; &nbsp; <a href="/backoffice">Backoffice</a> <% } %></span></div> <!-- INTERFACE USER TODO -->
 				<% } %>
 			</div> <!-- HEADER -->
+			<div class="row" style="height: 10px; background-color: #2F8358;"></div>
 
 			<% if (typeof msg !== 'undefined') { %>
 				<div class="alert alert-danger fade in">
@@ -109,49 +123,92 @@
 				</div>
 			<% } %>
 
-			<hr />
-			<div class="row">
-				<div class="<% if (typeof user !== 'undefined') { %>col-xs-12<% } else { %>col-md-7<% } %>">
+			<div style="background-color: black; color: white; padding: 20px 0px 20px 0px;" class="row">
+				<div class="<% if (typeof user !== 'undefined') { %>col-xs-12<% } else { %>col-md-9<% } %>">
 					<div class="row">
-						<div class="col-xs-2"><img class="hm-logo" src="../images/hm-logo.jpg" /></div> <!-- LOGO -->
-						<div class="col-xs-10">
+						<div class="col-xs-3"><img class="hm-logo" src="../images/hm-logo.jpg" /></div> <!-- LOGO -->
+						<div class="col-xs-9 greenborder">
 							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
 							<br />
-							<audio id="player2" width="100%" src="../audios/presentation.mp3" preload="auto" type="audio/mpeg" height="40"></audio>
+							<div onclick="songClicked('presentation');" class="song row"><div class="col-xs-offset-1 col-xs-10"><p class="text-center"><i class="fa fa-play-circle" aria-hidden="true"></i>&nbsp; Présentation de La Bulle</p></div></div>
 						</div> <!-- TEXT / AUDIO -->
 					</div>
 				</div> <!-- INFOS -->
 				<% if (typeof user == 'undefined') { %>
-					<div class="text-center col-md-5">
-						<form action="/auth" method="post">
-							Email :<br />
-							<input required type="email" name="mail"><br />
-							Mot de passe :<br />
-							<input required type="password" name="password"><br /><br />
-	  						<input type="submit" value="Connexion" name="button" />
-							<input type="submit" value="Inscription" name="button" /><br /><br />
+					<div class="text-center col-md-3">
+						<a onclick="toggleForm();" href="#" class="formSwapLink">Créer mon compte</a>
+						&nbsp;
+						<a onclick="toggleForm();" href="#" class="formSwapLink activeLink">Me connecter</a>
+						<br />
+						<br />
+						<form class="formSwapForm" action="/auth" method="post">
+							<input required placeholder="Addresse email" type="email" name="mail"><br />
+							<input required placeholder="Mot de passe" type="password" name="password"><br />
+	  						<input type="submit" value="Connexion" name="button" /> <br />
 	  						<a data-toggle="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
+						</form>
+						<form class="formSwapForm" hidden action="/auth" method="post">
+							<input required placeholder="Addresse email" type="email" name="mail"><br />
+							<input required placeholder="Mot de passe" type="password" name="password"><br />
+							<input required placeholder="Confirmer" type="password" name="repassword"><br />
+	  						<input type="submit" value="Inscription" name="button" /><br />
 						</form>
 					</div> <!-- FORMULAIRE -->
 				<% } %>
 			</div> <!-- INFOS / FORMULAIRE -->
-			<hr />
-			<div class="row">
-				<div class="col-md-6">
-					<div class="row"><div class="col-xs-12"><h2 class="text-center"><!-- TODO -->LA CONCENTRATION</h2></div></div> <!-- TITRE -->
-					<div class="row"><div class="col-xs-offset-4 col-xs-4"><img class="list-img" src="../images/hm-logo.jpg" /></div></div> <!-- IMAGE -->
-					<div class="row"><div class="col-xs-offset-1 col-xs-10"><p class="text-center">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></div></div> <!-- DESCRIPTION -->
-					<!-- TODO FOR LOOP -->
-					<div class="row"><div class="col-xs-offset-1 col-xs-10"><p class="text-center"><i class="fa <%= typeof user == 'undefined' ? 'fa-lock' : 'fa-play-circle' %>" aria-hidden="true"></i>Episode 1 - Lorem ipsum dolor<div style="margin: auto; margin-top: -8px; background-color: lightgrey; width: 38%; height: 2px;"><div style="background-color: #51E99D; width: 80%; height: 2px;"></div></div></p></div></div><!-- EPISODE (1) -->
-				</div><!-- UNE LISTE -->
+			<div class="row categoryBody">
+				<% categories.forEach((categorie) => { %>
+					<div class="col-md-offset-1 col-md-4 category">
+						<div class="row"><div class="col-xs-12"><h3><%= categorie.name %></h3></div></div> <!-- TITRE -->
+						<div class="categoryDesc row">
+							<div class="col-xs-4"><img class="list-img" src="../images/<%= categorie.image %>" /></div>
+							<div class="col-xs-8"><p><%= categorie.description %></p></div>
+						</div> <!-- IMAGE / DESCRIPTION -->
+						<% categorie.songs.forEach((song) => { %>
+							<% if (typeof user !== 'undefined') { %>
+								<% var timeRead = user.timeRead.find((elem) => { return elem.name == song.name }); %>
+								<% var liked = user.likes.findIndex((elem) => { return elem.name == song.name }); %>
+								<% if (typeof timeRead !== 'undefined') { %>
+									<div class="row">
+										<div onclick="songClicked('<%= song.name %>');" class="song col-xs-offset-1 col-xs-1"><i class="fa <%= typeof user == 'undefined' ? 'fa-lock' : 'fa-play-circle' %>" aria-hidden="true"></i></div>
+										<div onclick="songClicked('<%= song.name %>');" class="song col-xs-8"><p class="text-center"><%= song.name %> - <%- toMinutes(song.duration) %><div class="whiteloadingbar"><div class="greenloadingbar" id="loadingbar<%= timeRead %>" style="width: <%= (timeRead.time / timeRead.duration) * 100 %>%;"></div></div></p></div>
+										<div class="col-xs-1 song"><i onclick="favorite('<%= song.name %>')" class="fa fa-heart heartsong <%- song.name.replace(/\s/g,''); %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i></div>
+									</div>
+									<!-- TODO Confirmation de mot de passe en back end / MODIFIER LES CATEGORIES -->
+								<% } else { %>
+									<div class="row">
+										<div onclick="songClicked('<%= song.name %>');" class="song col-xs-offset-1 col-xs-1"><i class="fa <%= typeof user == 'undefined' ? 'fa-lock' : 'fa-play-circle' %>" aria-hidden="true"></i></div>
+										<div onclick="songClicked('<%= song.name %>');" class="col-xs-8 song"><p class="text-center"><%= song.name %> - <%- toMinutes(song.duration) %><div class="whiteloadingbar"></div></p></div>
+										<div class="col-xs-1 song"><i onclick="favorite('<%= song.name %>')" class="fa fa-heart heartsong <%- song.name.replace(/\s/g,''); %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i></div>
+									</div>
+								<% } %>
+							<% } else { %>
+								<div class="row">
+									<div onclick="songClicked('<%= song.name %>');" class="col-xs-offset-1 col-xs-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
+									<div onclick="songClicked('<%= song.name %>');" class="song col-xs-8"><p class="text-center"><%= song.name %> - <%- toMinutes(song.duration) %><div class="whiteloadingbar"></div></p></div>
+									<div class="col-xs-1"></div>
+								</div>
+							<% } %>
+						<% }); %>
+					</div><!-- UNE LISTE -->
+					<div class="col-md-1"></div>
+				<% }); %>
 			</div> <!-- LISTES -->
-			<hr />
-			<div class="row">
-				<div class="col-xs-offset-4 col-xs-4"><p class="text-center">Questionnaire</p></div>
+			<div style="background-color: #666666; color: white; padding: 20px 0 70px 0;" class="row">
+				<div class="col-xs-offset-2 col-xs-8">
+					<div class="greenborder row">
+						<div class="col-xs-12">
+							<p>Pour faire progresser la Bulle, nous avons besoins de vos retours sur ces premiers épisodes, merci de nous accorder 5 min pour remplir ce rapide questionnaire !
+								<br />A très vite ;)<br/><span style="float: right;">L’équipe Hello Marcel</span>
+							</p>
+							<br />
+							<a class="avisButton" href="#googleLink">JE DONNE MON AVIS !</a>
+						</div>
+					</div>
+				</div>
 			</div>
-			<hr />
-			<div class="row" style="margin-top: 100px;">
-				<div id="playerContainer" class="col-xs-12"><audio id="player" width="100%" src="../audios/presentation.mp3" preload="auto" type="audio/mpeg" height="40"></audio></div> <!-- AUDIO PLAYER -->
+			<div class="row">
+				<div id="playerContainer" class="col-xs-12"></div> <!-- AUDIO PLAYER -->
 			</div> <!-- FOOTER AUDIO -->
 
 		</div>
@@ -160,27 +217,38 @@
 		<script src="http://cdn.jsdelivr.net/npm/mediaelement@4.2.8/build/mediaelement-and-player.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script>
+			let user = <% if (typeof user !== 'undefined') { %><%- JSON.stringify(user) %><% } else { %>null<% } %>;
+			let categories = <%- JSON.stringify(categories) %>
+			let time = null;
+			let categoryHeight = 0;
+
 			jQuery(document).ready(function ($) {
-				$('#player').mediaelementplayer({
-				    success: function (mediaElement) {
-						mediaElement.addEventListener('loadedmetadata', function(){
-	 						mediaElement.setCurrentTime(mediaElement.duration - 0.0001);
-							mediaElement.play();
-					    });
-				     }
-				 });
- 				$('#player2').mediaelementplayer({
- 				    success: function (mediaElement) {
- 						mediaElement.setCurrentTime(0);
- 				     }
- 				 });
+				console.log(categories);
+				let song = (user ? (user.lastRead ? user.lastRead : null) : null);
+				if (song)
+					makeSong(song, false);
+
+				$('.categoryDesc').height(getMaxHeight('.categoryDesc'));
 			});
+
+			$(window).bind('beforeunload',function(){
+				if (time != null)
+					sendTimeToServer();
+				else {
+					console.log("time null : ", time);
+				}
+			});
+
+			const sendTimeToServer = () => {
+				$.post('/updateTime', time, (data) => {
+					console.log("ok");
+				});
+			};
 
 			const getPassword = () => {
 				let mail = $('#inputMailPassword').val();
 				if (mail && validateEmail(mail)) {
 					$.post('/repassword', { mail }, (data) => {
-						console.log(data);
 						if (data.error) {
 							$('#resPwdReset').text(data.error);
 							$('#resPwdReset').show();
@@ -200,8 +268,71 @@
 				return re.test(email);
 			}
 
+			const makeSong = (songName, autoPlay) => {
+				let image = "../images/" + categories.find((elem) => { let toReturn; elem.songs.forEach((el) => { if (el.name == songName) toReturn = el.name }); return toReturn == songName; });
+				image = image.image ? image.image : "../images/hm-logo.jpg";
+				console.log(image);
+				$("#playerContainer").html(`<audio id='player' width='100%' src='../audios/${songName}.mp3' preload='auto' type='audio/mpeg' height='40'></audio>`);
+				$('#player').mediaelementplayer({
+					success: function (mediaElement) {
+						mediaElement.addEventListener('loadedmetadata', function(){
+							$('.mejs__controls').append(`<div onclick="favorite('${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? songName : songName}');" class="${songName.replace(/\s/g,'')} mejs__button ${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? 'mejs_liked' : 'mejs_like'}"><i class="fa fa-heart fa-heart-spe" aria-hidden="true"></i></div>`);
+							$('.mejs__controls').prepend(`<div style="padding-top: 8px; margin-right: 5px;" class="mejs__button"><img width="34" src="${image}"/></div>`);
+							if (autoPlay)
+								mediaElement.play();
+							let songCurrentTime = user.timeRead.find((elem) => { return elem.name == songName });
+							if (songCurrentTime) mediaElement.setCurrentTime(songCurrentTime.time >= mediaElement.duration ? 0 : songCurrentTime.time);
+							else mediaElement.setCurrentTime(0);
+						});
+						mediaElement.addEventListener('timeupdate', function() {
+							if (mediaElement.currentTime > 1) {
+								let index = user.timeRead.findIndex((elem) => { return elem.name == songName });
+								if (index > -1) user.timeRead[index].time = mediaElement.currentTime;
+								time = { name: songName, time: mediaElement.currentTime, duration: mediaElement.duration };
+
+							}
+				        });
+					 }
+				});
+			};
+
+			const favorite = (songName) => {
+				$.post('/favorite/song', { songName }, (datas) => {
+					if (datas.error) {
+						console.log(datas);
+					} else {
+						$(`.${songName.replace(/\s/g,'')}`).toggleClass("mejs_like");
+						$(`.${songName.replace(/\s/g,'')}`).toggleClass("mejs_liked");
+						user = datas;
+					}
+				});
+			};
+
+			const songClicked = (songName) => {
+				<% if (typeof user == 'undefined') { %>
+					$("#modalAuth").modal('toggle');
+				<% } else { %>
+					if (time != null)
+						sendTimeToServer();
+					makeSong(songName, true);
+				<% } %>
+			};
+
+			const toggleForm = () => {
+				$('.formSwapLink').toggleClass("activeLink");
+				$('.formSwapForm').toggle(1000);
+			};
+
+			const getMaxHeight = (name) => {
+				let height = 0;
+				$(name).each(function () {
+					height = $(this).height() > height ? $(this).height() : height;
+				});
+				return height;
+			};
+
 		</script>
 	</body>
 </html>
 
-<!-- Créé par Jérémy Misiti ->
+<!-- Créé par Jérémy Misiti -->

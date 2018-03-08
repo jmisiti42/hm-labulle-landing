@@ -3,6 +3,10 @@
     src: url('./Brandon_reg.otf');
 }
 
+body {
+	background-color: #666666;
+}
+
 @font-face {
 	font-family: avenirl;
 	src: url('./Avenir_Light.otf');
@@ -17,17 +21,121 @@ h1 {
 	font-family: brandon;
 }
 
+a, a:hover, a:focus, a:visited, a:target {
+	color: white;
+}
+
+.mejs_liked {
+	color: #2F8358;
+}
+
+.mejs_like {
+	color: white;
+}
+
+.heartsong {
+	font-size: 20px !important;
+    padding-top: 10px;
+}
+
+.fa-heart-spe {
+	font-size: 25px;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+.whiteloadingbar {
+	margin: auto;
+	margin-top: -8px;
+	background-color: white;
+	width: 100%;
+	height: 4px;
+}
+
+.modal-content {
+	background-color: #282828;
+	color: white;
+}
+
+.category {
+	border-radius: 40px;
+	padding: 0px 25px 0px 25px;
+	background-color: #51E99D;
+}
+
+h3 {
+	padding-bottom: 5px;
+	color: white;
+}
+
+.categoryBody {
+	padding: 20px 0 20px 0;
+	background-color: #424242;
+}
+
+.formSwapForm input {
+	margin-bottom: 5px;
+	color: black;
+}
+
+.modal-header, .modal-footer {
+	border-color: #51E99D;
+}
+
+.greenborder {
+	border-width: 3px;
+	border-style: solid;
+	padding: 25px;
+	border-radius: 25px;
+	border-color: #51E99D;
+}
+
+.greenloadingbar {
+	background-color: #2F8358;
+	height: 4px;
+}
+
+.activeLink, .activeLink:hover, .activeLink:focus, .activeLink:visited, .activeLink:target {
+	color: #51E99D;
+}
+
+.song {
+	cursor: pointer;
+}
+
+.mejs__time-current {
+	background-color: #51E99D !important;
+}
+
+.mejs__horizontal-volume-current {
+	background-color: #4DDC92 !important;
+}
+
 .no-decorations, .no-decorations:hover, .no-decorations:active, .no-decorations:visited {
 	color:inherit;
 	text-decoration: none;
 }
 
 .fa-play-circle, .fa-lock {
-	padding-right: 4px;
 	font-size: 20px;
-	position: absolute;
-	margin-left: -25px;
-	margin-top: 1px;
+	padding-top: 10px;
+}
+
+.avisButton {
+	display: block;
+	margin: auto;
+	text-decoration: none !important;
+	text-align: center;
+	background-color: #51E99D;
+	color: white;
+	height: 40px;
+	width: 170px;
+	padding: 10px 0 10px 0;
+	border-radius: 40px;
+}
+
+.avisButton:hover {
+	background-color: #4DDD99;
 }
 
 #playerContainer {
@@ -37,12 +145,12 @@ h1 {
 
 .user-interface {
 	float: right;
-	padding-top: 30px;
+	padding-top: 15px;
 	padding-right: 15px;
 }
 
 .hm-logo {
-	max-width: 100%;
+	width: 100%;
 }
 
 .list-img {

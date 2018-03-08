@@ -1,8 +1,12 @@
 require("../models/User");
+require("../models/Song");
+require("../models/Category");
 const config 				= require('../config/production.json');
 const mongoose 				= require('mongoose');
 const nodemailer			= require('nodemailer');
 const User 					= mongoose.model('User');
+const Song 					= mongoose.model('Song');
+const Category 				= mongoose.model('Category');
 const hasha 				= require('hasha');
 const generatePwd			= require('password-generator');
 const ipAddress 			= new Array();
@@ -34,11 +38,47 @@ const AuthController = function () {
 	};
 
 	this.showView = (req, res, params) => {
+		console.log(req.device.type); //TODO;
 		if (!params || typeof params == 'function')
 			params = {};
-		if (req.session && req.session.user)
-			params.user = req.session.user;
-		res.render('index', params);
+		params.toMinutes = (time) => {
+			let minutes = time / 60;
+			let minutesSeconds = minutes.toString().split('.');
+			let m = minutesSeconds[0];
+			let s = minutesSeconds[1].charAt(0) + minutesSeconds[1].charAt(1);
+			return `${m}'${(s / 100 * 60).toString().substring(0, 2)}`;
+		}
+		Category.find().exec((err, categories) => {
+		    var promises = categories.map( category =>
+		        Song.find({ category: category.name })
+		            .then( songs => ({
+		                songs: songs,
+						name: category.name,
+						image: category.image,
+						description: category.description
+		            }))
+		    );
+		    Promise.all(promises)
+		        .then( result => {
+					params.categories = result;
+					if (req.session && req.session.user) {
+						User.findOne({ _id: req.session.user._id }).exec((err, _usr) => {
+							if (err) { console.log(err); }
+							else if (!_usr) { return res.render('index', params); }
+							else {
+								params.user = _usr;
+								res.render('index', params);
+							}
+
+						});
+					} else {
+						return res.render('index', params);
+					}
+		        })
+		        .catch( err => {
+					return res.render('index', { msg: [err.message]});
+		        })
+		});
 	};
 
 	this.logout = (req, res, next) => {
@@ -223,11 +263,5 @@ const verifyFields = (req) => {
 		errors.push('Veuillez entrer une addresse e-mail valide.');
 	if (!req.body.password)
 		errors.push('Veuillez renseigner votre mot de passe.');
-	if (req.body.childs && req.body.childs.length > 0) {
-		for (var i = 0; i != req.body.childs.length; i++) {
-			if (req.body.childs[i].length <= 0 || isNaN(req.body.childs[i]))
-				errors.push('Enfant ' + i + " mal formaté");
-		}
-	}
 	return errors;
 }
