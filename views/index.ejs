@@ -2,7 +2,7 @@
 <html>
   <head>
 	  <meta name="viewport" content="width=device-width" />
-	  <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico"/>
+	  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	  <link rel="stylesheet" href="/css/style.css">
 	  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
@@ -27,13 +27,13 @@
 						<br />
 						<br />
 						<form class="formSwapForm" action="/auth" method="post">
-							<input required placeholder="Addresse email" type="email" name="mail"><br />
+							<input required placeholder="Adresse email" type="email" name="mail"><br />
 							<input required placeholder="Mot de passe" type="password" name="password"><br />
 	  						<input type="submit" value="Connexion" name="button" /> <br />
 							<a data-toggle="modal" data-dismiss="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
 						</form>
 						<form class="formSwapForm" hidden action="/auth" method="post">
-							<input required placeholder="Addresse email" type="email" name="mail"><br />
+							<input required placeholder="Adresse email" type="email" name="mail"><br />
 							<input required placeholder="Mot de passe" type="password" name="password"><br />
 							<input required placeholder="Confirmer" type="password" name="repassword"><br />
 	  						<input type="submit" value="Inscription" name="button" /><br />
@@ -75,7 +75,7 @@
 							<input required type="email" name="mail" class="form-control" value="<%= user.mail  %>" placeholder="Votre mail"/>
 							<br />
 							<div class="text-center">
-								<button type="submit" form="formEdit" value="Je change mon addresse mail" class="text-center btn btn-default">Je change mon addresse mail</button>
+								<button type="submit" form="formEdit" value="Je change mon adresse mail" class="text-center btn btn-default">Je change mon adresse mail</button>
 							</div>
 						</form>
 						<br />
@@ -142,13 +142,13 @@
 						<br />
 						<br />
 						<form class="formSwapForm" action="/auth" method="post">
-							<input required placeholder="Addresse email" type="email" name="mail"><br />
+							<input required placeholder="Adresse email" type="email" name="mail"><br />
 							<input required placeholder="Mot de passe" type="password" name="password"><br />
 	  						<input type="submit" value="Connexion" name="button" /> <br />
 	  						<a data-toggle="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
 						</form>
 						<form class="formSwapForm" hidden action="/auth" method="post">
-							<input required placeholder="Addresse email" type="email" name="mail"><br />
+							<input required placeholder="Adresse email" type="email" name="mail"><br />
 							<input required placeholder="Mot de passe" type="password" name="password"><br />
 							<input required placeholder="Confirmer" type="password" name="repassword"><br />
 	  						<input type="submit" value="Inscription" name="button" /><br />
@@ -258,7 +258,7 @@
 						}
 					});
 				} else {
-					$('#resPwdReset').text("Veuillez entrer une address mail valide.");
+					$('#resPwdReset').text("Veuillez entrer une adress mail valide.");
 					$('#resPwdReset').show();
 				}
 			};
