@@ -27,15 +27,15 @@
 						<br />
 						<br />
 						<form class="formSwapForm" action="/auth" method="post">
-							<input required placeholder="Adresse email" type="email" name="mail"><br />
-							<input required placeholder="Mot de passe" type="password" name="password"><br />
+							<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
+							<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
 	  						<input type="submit" value="Connexion" name="button" /> <br />
 							<a data-toggle="modal" data-dismiss="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
 						</form>
 						<form class="formSwapForm" hidden action="/auth" method="post">
-							<input required placeholder="Adresse email" type="email" name="mail"><br />
-							<input required placeholder="Mot de passe" type="password" name="password"><br />
-							<input required placeholder="Confirmer" type="password" name="repassword"><br />
+							<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
+							<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
+							<input required autocomplete="off" placeholder="Confirmer" type="password" name="repassword"><br />
 	  						<input type="submit" value="Inscription" name="button" /><br />
 						</form>
 					</div>
@@ -81,9 +81,9 @@
 						<br />
 						<br />
 						<form action="/edit/password" id="formPassword" method="post">
-							<input required type="password" name="oldPassword" class="form-control" placeholder="Ancien mot de passe"/>
+							<input required autocomplete="off" type="password" name="oldPassword" class="form-control" placeholder="Ancien mot de passe"/>
 							<br />
-							<input required type="password" name="password" class="form-control" placeholder="Nouveau mot de passe"/>
+							<input required autocomplete="off" type="password" name="password" class="form-control" placeholder="Nouveau mot de passe"/>
 							<br />
 							<div class="text-center">
 								<button type="submit" form="formPassword" value="Je change mon mot de passe" class="btn btn-default">Je change mon mot de passe</button>
@@ -142,15 +142,15 @@
 						<br />
 						<br />
 						<form class="formSwapForm" action="/auth" method="post">
-							<input required placeholder="Adresse email" type="email" name="mail"><br />
-							<input required placeholder="Mot de passe" type="password" name="password"><br />
+							<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
+							<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
 	  						<input type="submit" value="Connexion" name="button" /> <br />
 	  						<a data-toggle="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
 						</form>
 						<form class="formSwapForm" hidden action="/auth" method="post">
-							<input required placeholder="Adresse email" type="email" name="mail"><br />
-							<input required placeholder="Mot de passe" type="password" name="password"><br />
-							<input required placeholder="Confirmer" type="password" name="repassword"><br />
+							<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
+							<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
+							<input required autocomplete="off" placeholder="Confirmer" type="password" name="repassword"><br />
 	  						<input type="submit" value="Inscription" name="button" /><br />
 						</form>
 					</div> <!-- FORMULAIRE -->
