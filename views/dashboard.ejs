@@ -26,9 +26,6 @@
 									</div>
 									<div class="modal-body">
 									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -149,9 +146,25 @@
 								$('#modalUser .modal-body table tbody').append(`<tr><td>${elem.name}</td><td>${toPercentage(elem.readed)}</td><td>${moment(elem.timestamp).format('MM/DD/YYYY - hh:mm')}</td></tr>`);
 							});
 
+
 							$('#modalUser .modal-body').append(`<br /><table class="text-center"><thead><tr><th>Fidelité</th></tr></thead><tbody><tr><td>${toPercentage(fidelity / datas.listeneds.length)}</td></tr></tbody></table>`);
-							$('#modalUser').modal('toggle');
+
+
+							let stats = new Array();
+							let tot = 0;
 							console.log(datas);
+							datas.devices.forEach((elem) => {
+								stats[elem.device] = stats[elem.device] ? stats[elem.device] + 1 : 1;
+								tot++;
+							});
+							$('#modalUser .modal-body').append('<br /><table id="devicetable"><thead><tr><th>Devices</th><th>Pourcentage</th></tr></thead><tbody></tbody></table>');
+							for (var k in stats){
+							    if (stats.hasOwnProperty(k)) {
+									$('#devicetable tbody').append(`<tr><td>${k}</td><td>${stats[k] / tot * 100}%</td></tr>`);
+							    }
+							}
+
+							$('#modalUser').modal('toggle');
 						}
 					});
 				});
@@ -168,7 +181,7 @@
 			});
 
 			const toPercentage = (number) => {
-				return `${number.toString().charAt(0)}${number.toString().charAt(1)}%`
+				return `${number.toString().charAt(0)}${number.toString().charAt(1) == "." ? "" : number.toString().charAt(1)}%`
 			};
 
 			function toggleDropdow(toToggle) {

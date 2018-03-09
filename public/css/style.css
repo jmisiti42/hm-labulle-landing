@@ -153,6 +153,10 @@ h3 {
 	width: 100%;
 }
 
+.close, .close:hover {
+	color: #51E99D;
+}
+
 .list-img {
 	margin: auto;
 	width: 100%;

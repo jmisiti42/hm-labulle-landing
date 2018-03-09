@@ -38,7 +38,6 @@ const AuthController = function () {
 	};
 
 	this.showView = (req, res, params) => {
-		console.log(req.device.type); //TODO;
 		if (!params || typeof params == 'function')
 			params = {};
 		params.toMinutes = (time) => {
@@ -202,6 +201,8 @@ const AuthController = function () {
 			if (errors.length > 0) {
 				o.showView(req, res, { msg: errors });
 			} else {
+				if (req.body.password !==  req.body.repassword)
+					return o.showView(req, res, { msg: ["Vos mots de passes doivent correspondre."] });
 				let pwd = hasha(req.body.password, { algorithm: 'whirlpool'});
 				req.body.password = pwd;
 				User.findOne({ mail: req.body.mail }).exec((err, usr) => {

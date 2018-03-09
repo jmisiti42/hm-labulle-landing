@@ -1,8 +1,10 @@
 require("../models/User");
+require("../models/Device");
 require("../models/Listened");
 const config 				= require('../config/production.json');
 const mongoose 				= require('mongoose');
 const User 					= mongoose.model('User');
+const Device 				= mongoose.model('Device');
 const Listened 				= mongoose.model('Listened');
 const hasha 				= require('hasha');
 const ipAddress 			= new Array();
@@ -51,7 +53,11 @@ const BoController = function () {
 			Listened.find({ idReader: user._id }).exec((err, listeneds) => {
 				if (err) return res.json({error: err.message});
 				result.listeneds = listeneds;
-				res.json(result);
+				Device.find({ userId: user._id }).exec((err, devices) => {
+					if (err) return res.json({error: err.message});
+					result.devices = devices;
+					res.json(result);
+				});
 			});
 		});
 	};

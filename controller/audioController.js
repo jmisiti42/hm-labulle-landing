@@ -1,5 +1,6 @@
 require("../models/Song");
 require("../models/User");
+require("../models/Device");
 require("../models/Category");
 const fs 					= require('fs');
 const config 				= require('../config/production.json');
@@ -7,8 +8,10 @@ const mongoose 				= require('mongoose');
 const path					= require('path');
 const formidable			= require('formidable');
 const mp3Duration			= require('mp3-duration');
+const hasha 				= require('hasha');
 const User 					= mongoose.model('User');
 const Song 					= mongoose.model('Song');
+const Device 				= mongoose.model('Device');
 const Category 				= mongoose.model('Category');
 
 const AudioController = function () {
@@ -40,6 +43,23 @@ const AudioController = function () {
 		User.findOne({ _id: req.session.user._id }).exec((err, _user) => {
 			if (err) return res.json({ "error": true });
 			if (!_user) return res.json({ "error": "no user"});
+			Device.find({ userId: req.session.user._id }).exec((err, devices) => {
+				if (devices.findIndex((elem) => { return elem.ipHash == hasha(req.ip, { algorithm: "whirlpool" }); }) > -1) {
+					if (devices.findIndex((elem) => { return elem.device == req.device.type }) == -1) {
+						let device = new Device();
+						device.device = req.device.type;
+						device.ipHash = hasha(req.ip, { algorithm: "whirlpool" });
+						device.userId = req.session.user._id;
+						device.save();
+					}
+				} else {
+					let device = new Device();
+					device.device = req.device.type;
+					device.ipHash = hasha(req.ip, { algorithm: "whirlpool" });
+					device.userId = req.session.user._id;
+					device.save();
+				}
+			});
 			_user.updateOrCreate(req.session.user._id, req.body.name, req.body.time, req.body.duration, (usr) => {
 				req.session.user = usr;
 				req.session.save((err) => {
