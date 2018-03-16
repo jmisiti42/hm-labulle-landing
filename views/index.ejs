@@ -295,7 +295,7 @@
 								songCurrentTime = user.timeRead.find((elem) => { return elem.name == songName });
 							}
 							$('.mejs__controls').prepend(`<div style="padding-top: 8px; margin-right: 5px;" class="mejs__button"><img width="34" src="${image}"/></div>`);
-							$('.mejs__controls').prepend(`<div style="font-size: 10px; width: ${(categoryName.length + songName.length) * 6 - 5}px;padding-top: 18px; margin-right: 5px; color: white;" class="mejs__button">${categoryName} - ${songName}</div>`);
+							$('.mejs__controls').prepend(`<div style="font-size: 10px; width: ${(categoryName.length + songName.length) * 5 - 5}px;padding-top: 18px; margin-right: 5px; color: white;" class="mejs__button">${categoryName} - ${songName}</div>`);
 							if (songCurrentTime) mediaElement.setCurrentTime(songCurrentTime.time >= mediaElement.duration ? 0 : songCurrentTime.time);
 							else mediaElement.setCurrentTime(0);
 							if (autoPlay) {
