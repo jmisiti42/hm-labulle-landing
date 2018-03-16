@@ -162,7 +162,7 @@
 			</div> <!-- INFOS / FORMULAIRE -->
 			<div class="row categoryBody">
 				<% categories.forEach((categorie, index) => { %>
-					<div class="col-xs-offset-1 <%= index % 2 == 0 ? 'col-md-offset-1' : '' %> col-md-4 col-xs-10 category">
+					<div class="col-xs-offset-1 col-md-4 col-xs-10 category">
 						<div class="row"><div class="col-xs-12"><h3><%= categorie.name %></h3></div></div> <!-- TITRE -->
 						<div class="categoryDesc row">
 							<div class="col-xs-4"><img class="list-img" src="../images/<%= categorie.image %>" /></div>
@@ -185,6 +185,7 @@
 							</div>
 						<% }); %>
 					</div><!-- UNE LISTE -->
+					<div class="col-xs-1"></div>
 				<% }); %>
 			</div> <!-- LISTES -->
 			<div style="background-color: #666666; color: white; padding: 20px 0 70px 0;" class="row">
@@ -320,6 +321,10 @@
 				$('.formSwapLink').toggleClass("activeLink");
 				$('.formSwapForm').toggle(0);
 			};
+
+			$('a[href="#"]').click((ev) => {
+				ev.preventDefault();
+			});
 
 			const getMaxHeight = (name) => {
 				let height = 0;
