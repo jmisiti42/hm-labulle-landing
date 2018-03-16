@@ -54,10 +54,10 @@ app.get('/backoffice', authController.isLoggedIn, authController.isAdmin, boCont
 
 //List of all categorys
 app.get('/categorys', authController.isLoggedIn, authController.isAdmin, categoryController.showView);
-//create new category view
-app.get('/create/category', authController.isLoggedIn, authController.isAdmin, categoryController.showCreateCategory);
 //create new category
 app.post('/create/category', authController.isLoggedIn, authController.isAdmin, categoryController.createCategory);
+//create new category view
+app.get('/create/category', authController.isLoggedIn, authController.isAdmin, categoryController.showFormCategory);
 //remove a category
 app.get('/remove/category/:id', authController.isLoggedIn, authController.isAdmin, categoryController.removeCategory);
 
@@ -69,10 +69,14 @@ app.get('/user/:mail', authController.isLoggedIn, authController.isAdmin, boCont
 
 //List of all podcasts
 app.get('/songs', authController.isLoggedIn, authController.isAdmin, audioController.showView);
-//create new song view
-app.get('/create/song', authController.isLoggedIn, authController.isAdmin, audioController.showCreateSong);
 //create new song
 app.post('/create/song', authController.isLoggedIn, authController.isAdmin, audioController.createSong);
+//create new song view
+app.get('/create/song', authController.isLoggedIn, authController.isAdmin, audioController.showFormSong);
+//edit song
+app.post('/edit/song/:id', authController.isLoggedIn, authController.isAdmin, audioController.editSong);
+//edit song view
+app.get('/edit/song/:id', authController.isLoggedIn, authController.isAdmin, audioController.showFormSong);
 //remove a category
 app.get('/remove/song/:id', authController.isLoggedIn, authController.isAdmin, audioController.removeSong);
 //Add a song to favorite

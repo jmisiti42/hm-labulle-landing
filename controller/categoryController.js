@@ -32,8 +32,8 @@ const CategoryController = function () {
 		});
 	};
 
-	this.showCreateCategory = (req, res) => {
-		res.render('createCategory');
+	this.showFormCategory = (req, res) => {
+		res.render('formCategory');
 	};
 
 	this.createCategory = (req, res) => {

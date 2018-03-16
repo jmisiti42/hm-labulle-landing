@@ -19,6 +19,23 @@ html {
     cursor: pointer;
 }
 
+.separator {
+	border-right: 1px solid black;
+	margin-left: 5px;
+	margin-right: 5px;
+	height: 15px;
+}
+
+a, a:hover, a:focus, a:visited, a:target {
+	color: #48f6a1;
+}
+
+.fa {
+	font-size: 17px !important;
+	padding-top: 10px;
+	color: red;
+}
+
 .elemclicked {
 	transition: background-color 1s linear;
     background-color: #3eec97 !important;

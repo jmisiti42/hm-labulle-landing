@@ -78,36 +78,104 @@ const AudioController = function () {
 		});
 	};
 
-	this.showCreateSong = (req, res) => {
-		let params = {};
+	this.showFormSong = (req, res) => {
+		let params = { categorys: {}, song: {} };
+		let id = req.params.id ? req.params.id : null;
 		Category.find().exec((err, categorys) => {
-			params.categorys = categorys;
-			res.render('createSong', params);
+			if (id) {
+				Song.findOne({ _id: id }).exec((err, song) => {
+					params.song = song ? song : {};
+					params.categorys = categorys;
+					res.render('formSong', params);
+				});
+			} else {
+				params.categorys = categorys;
+				res.render('formSong', params);
+			}
 		});
 	};
 
 	this.createSong = (req, res) => {
-		if (!req.files.file) return o.showView(req, res, { msg: ["Fichier non trouvé."] });
+		if (!req.files.file) return o.showView(req, res, { msg: ["Fichier audio non trouvé."] });
+		if (!req.files.filePdf) return o.showView(req, res, { msg: ["Fichier pdf non trouvé."] });
 		if (!req.body.name) return o.showView(req, res, { msg: ["Veuillez renseigner le nom du podcast."] });
-		if (req.files.file.mimetype.split('/')[1] != "mp3") return o.showView(req, res, { msg: ["Mauvais format de fichier."] });
-		if (!req.body.category) return o.showView(req, res, { msg: ["Veuillez renseigner la categori du podcast."] });
+		if (req.files.file.mimetype.split('/')[1] != "mp3") return o.showView(req, res, { msg: ["Mauvais format de fichier mp3."] });
+		if (req.files.filePdf.mimetype.split('/')[1] != "pdf") return o.showView(req, res, { msg: ["Mauvais format de fichier pdf."] });
+		if (!req.body.category) return o.showView(req, res, { msg: ["Veuillez renseigner la categorie du podcast."] });
 		let file = req.files.file;
+		let filePdf = req.files.filePdf;
 		file.mv(`${__dirname}/../public/audios/${req.body.name}.mp3`, (err) => {
 			if (err) return o.showView(req, res, { msg: [err.message] });
 			else {
-				mp3Duration(`${__dirname}/../public/audios/${req.body.name}.mp3`, function (err, duration) {
+				filePdf.mv(`${__dirname}/../public/pdfs/${req.body.name}.pdf`, (err) => {
 					if (err) return o.showView(req, res, { msg: [err.message] });
-					let song = new Song();
-					song.category = req.body.category;
-					song.name = req.body.name;
-					song.duration = duration;
-					song.last = req.body.last == 'true' ? true : false;
+					else {
+						mp3Duration(`${__dirname}/../public/audios/${req.body.name}.mp3`, function (err, duration) {
+							if (err) return o.showView(req, res, { msg: [err.message] });
+							let song = new Song();
+							song.category = req.body.category;
+							song.name = req.body.name;
+							song.duration = duration;
+							song.last = req.body.last == 'true' ? true : false;
+							song.save((err) => {
+								if (err) return o.showView(req, res, { msg: [err.message] });
+								else return o.showView(req, res, { msgOk: [`${req.body.name}.mp3 enregistré avec succès !`] });
+							});
+						});
+					}
+				});
+			}
+		});
+	};
+
+	this.editSong = (req, res) => {
+		if (!req.body.name) return o.showView(req, res, { msg: ["Veuillez renseigner le nom du podcast."] });
+		if (!req.body.category) return o.showView(req, res, { msg: ["Veuillez renseigner la categorie du podcast."] });
+		if (!req.body.id) return o.showView(req, res, { msg: ["Une erreur est survenue."] });
+		let saved = req.files.file ? false : true;
+		let savedPdf = req.files.filePdf ? false : true;
+		Song.findOne({ _id: req.body.id }).exec((err, song) => {
+			if (err) return o.showView(req, res, { msg: [err.message] });
+			if (!song) return o.showView(req, res, { msg: ["Une erreur est survenue."] });
+			let file = req.files.file;
+			let filePdf = req.files.filePdf;
+			if (file) {
+				file.mv(`${__dirname}/../public/audios/${req.body.name}.mp3`, (err) => {
+					if (err) return o.showView(req, res, { msg: [err.message] });
+					else {
+						mp3Duration(`${__dirname}/../public/audios/${req.body.name}.mp3`, function (err, duration) {
+							if (err) return o.showView(req, res, { msg: [err.message] });
+							song.duration = duration;
+							song.save((err) => {
+								if (err) return o.showView(req, res, { msg: [err.message] });
+								saved = true;
+							});
+						});
+					}
+				});
+			}
+			if (filePdf) {
+				filePdf.mv(`${__dirname}/../public/pdfs/${req.body.name}.pdf`, (err) => {
+					if (err) return o.showView(req, res, { msg: [err.message] });
+					savedPdf = true;
+				});
+			}
+
+			song.category = req.body.category;
+			song.name = req.body.name;
+			song.last = req.body.last == 'true' ? true : false;
+
+			const saveSong = () => {
+				if (saved == false || savedPdf == false) {
+					setTimeout(saveSong, 1000);
+				} else {
 					song.save((err) => {
 						if (err) return o.showView(req, res, { msg: [err.message] });
 						else return o.showView(req, res, { msgOk: [`${req.body.name}.mp3 enregistré avec succès !`] });
 					});
-				});
-			}
+				}
+			};
+			saveSong();
 		});
 	};
 

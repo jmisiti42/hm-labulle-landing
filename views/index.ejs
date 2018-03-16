@@ -132,63 +132,62 @@
 					</div>
 				</div> <!-- INFOS -->
 				<% if (typeof user == 'undefined') { %>
-					<div class="text-center col-md-3">
-						<a onclick="toggleForm();" href="#" class="formSwapLink">Créer mon compte</a>
-						&nbsp;
-						<a onclick="toggleForm();" href="#" class="formSwapLink activeLink">Me connecter</a>
-						<br />
-						<br />
-						<form class="formSwapForm" action="/auth" method="post">
-							<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
-							<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
-	  						<input type="submit" value="Connexion" name="button" /> <br />
-	  						<a data-toggle="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
-						</form>
-						<form class="formSwapForm" hidden action="/auth" method="post">
-							<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
-							<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
-							<input required autocomplete="off" placeholder="Confirmer" type="password" name="repassword"><br />
-	  						<input type="submit" value="Inscription" name="button" /><br />
-						</form>
+					<div class=" text-center col-md-3">
+						<div class="row">
+							<div class="col-xs-6">
+								<a onclick="toggleForm();" href="#" class="formSwapLink">Créer mon compte</a>
+							</div>
+							<div class="col-xs-6">
+								<a onclick="toggleForm();" href="#" class="formSwapLink activeLink">Me connecter</a>
+							</div>
+							<br />
+							<br />
+						</div>
+						<div class="row">
+							<div class="col-xs-12">
+								<form class="formSwapForm" action="/auth" method="post">
+									<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
+									<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
+			  						<input type="submit" value="Connexion" name="button" /> <br />
+			  						<a data-toggle="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
+								</form>
+								<form class="formSwapForm" hidden action="/auth" method="post">
+									<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
+									<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
+									<input required autocomplete="off" placeholder="Confirmer" type="password" name="repassword"><br />
+			  						<input type="submit" value="Inscription" name="button" /><br />
+								</form>
+							</div>
+						</div>
 					</div> <!-- FORMULAIRE -->
 				<% } %>
 			</div> <!-- INFOS / FORMULAIRE -->
 			<div class="row categoryBody">
 				<% categories.forEach((categorie) => { %>
-					<div class="col-md-offset-1 col-md-4 category">
+					<div class="col-xs-offset-1 col-md-4 col-xs-10 category">
 						<div class="row"><div class="col-xs-12"><h3><%= categorie.name %></h3></div></div> <!-- TITRE -->
 						<div class="categoryDesc row">
-							<div class="col-xs-4"><img class="list-img" src="../images/<%= categorie.image %>" /></div>
+							<div class="col-xs-4" style="height: 100%;"><img class="list-img" src="../images/<%= categorie.image %>" /></div>
 							<div class="col-xs-8"><p><%= categorie.description %></p></div>
 						</div> <!-- IMAGE / DESCRIPTION -->
+						<br />
 						<% categorie.songs.forEach((song) => { %>
 							<% if (typeof user !== 'undefined') { %>
 								<% var timeRead = user.timeRead.find((elem) => { return elem.name == song.name }); %>
 								<% var liked = user.likes.findIndex((elem) => { return elem.name == song.name }); %>
-								<% if (typeof timeRead !== 'undefined') { %>
-									<div class="row">
-										<div onclick="songClicked('<%= song.name %>');" class="song col-xs-offset-1 col-xs-1"><i class="fa <%= typeof user == 'undefined' ? 'fa-lock' : 'fa-play-circle' %>" aria-hidden="true"></i></div>
-										<div onclick="songClicked('<%= song.name %>');" class="song col-xs-8"><p class="text-center"><%= song.name %> - <%- toMinutes(song.duration) %><div class="whiteloadingbar"><div class="greenloadingbar" id="loadingbar<%= timeRead %>" style="width: <%= (timeRead.time / timeRead.duration) * 100 %>%;"></div></div></p></div>
-										<div class="col-xs-1 song"><i onclick="favorite('<%= song.name %>')" class="fa fa-heart heartsong <%- song.name.replace(/\s/g,''); %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i></div>
-									</div>
-									<!-- TODO Confirmation de mot de passe en back end / MODIFIER LES CATEGORIES -->
-								<% } else { %>
-									<div class="row">
-										<div onclick="songClicked('<%= song.name %>');" class="song col-xs-offset-1 col-xs-1"><i class="fa <%= typeof user == 'undefined' ? 'fa-lock' : 'fa-play-circle' %>" aria-hidden="true"></i></div>
-										<div onclick="songClicked('<%= song.name %>');" class="col-xs-8 song"><p class="text-center"><%= song.name %> - <%- toMinutes(song.duration) %><div class="whiteloadingbar"></div></p></div>
-										<div class="col-xs-1 song"><i onclick="favorite('<%= song.name %>')" class="fa fa-heart heartsong <%- song.name.replace(/\s/g,''); %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i></div>
-									</div>
-								<% } %>
-							<% } else { %>
-								<div class="row">
-									<div onclick="songClicked('<%= song.name %>');" class="col-xs-offset-1 col-xs-1"><i class="fa fa-lock" aria-hidden="true"></i></div>
-									<div onclick="songClicked('<%= song.name %>');" class="song col-xs-8"><p class="text-center"><%= song.name %> - <%- toMinutes(song.duration) %><div class="whiteloadingbar"></div></p></div>
-									<div class="col-xs-1"></div>
-								</div>
 							<% } %>
+							<div class="row">
+								<div onclick="songClicked('<%= song.name %>');" class="song col-xs-offset-1 col-xs-1"><i class="fa <% if (typeof user !== 'undefined') { %>fa-play-circle<% } else { %>fa-lock<% } %>" aria-hidden="true"></i></div>
+								<div onclick="songClicked('<%= song.name %>');" class="song col-xs-6"><p class="text-center"><%= song.name %> - <%- toMinutes(song.duration) %>
+									<div class="whiteloadingbar"><% if (typeof timeRead !== 'undefined') { %><div class="greenloadingbar" id="loadingbar<%= timeRead %>" style="width: <%= (timeRead.time / timeRead.duration) * 100 %>%;"></div><% } %></div></p>
+								</div>
+								<div class="col-xs-1 song"><% if (typeof user !== 'undefined') { %><i onclick="favorite('<%= song.name %>')" class="fa fa-heart heartsong <%- song.name.replace(/\s/g,''); %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i><% } %></div>
+								<div class="col-xs-1 song" style="font-size: 9px; margin-top: 8px;">Version text</div>
+								<div class="col-xs-1 song"><% if (typeof user !== 'undefined') { %><a target="_blank" href="../pdfs/<%= song.name %>.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a><% } %></div>
+							</div>
 						<% }); %>
 					</div><!-- UNE LISTE -->
-					<div class="col-md-1"></div>
+					<div class="col-xs-1"></div>
 				<% }); %>
 			</div> <!-- LISTES -->
 			<div style="background-color: #666666; color: white; padding: 20px 0 70px 0;" class="row">
@@ -272,20 +271,24 @@
 				$('#player').mediaelementplayer({
 					success: function (mediaElement) {
 						mediaElement.addEventListener('loadedmetadata', function(){
-							$('.mejs__controls').append(`<div onclick="favorite('${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? songName : songName}');" class="${songName.replace(/\s/g,'')} mejs__button ${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? 'mejs_liked' : 'mejs_like'}"><i class="fa fa-heart fa-heart-spe" aria-hidden="true"></i></div>`);
+							let songCurrentTime;
+							if (user) {
+								$('.mejs__controls').append(`<div onclick="favorite('${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? songName : songName}');" class="${songName.replace(/\s/g,'')} mejs__button ${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? 'mejs_liked' : 'mejs_like'}"><i class="fa fa-heart fa-heart-spe" aria-hidden="true"></i></div>`);
+								songCurrentTime = user.timeRead.find((elem) => { return elem.name == songName });
+							}
 							$('.mejs__controls').prepend(`<div style="padding-top: 8px; margin-right: 5px;" class="mejs__button"><img width="34" src="${image}"/></div>`);
-							if (autoPlay)
-								mediaElement.play();
-							let songCurrentTime = user.timeRead.find((elem) => { return elem.name == songName });
 							if (songCurrentTime) mediaElement.setCurrentTime(songCurrentTime.time >= mediaElement.duration ? 0 : songCurrentTime.time);
 							else mediaElement.setCurrentTime(0);
+							if (autoPlay) {
+								console.log("play");
+								mediaElement.play();
+							}
 						});
 						mediaElement.addEventListener('timeupdate', function() {
-							if (mediaElement.currentTime > 1) {
+							if (mediaElement.currentTime > 1 && user) {
 								let index = user.timeRead.findIndex((elem) => { return elem.name == songName });
 								if (index > -1) user.timeRead[index].time = mediaElement.currentTime;
 								time = { name: songName, time: mediaElement.currentTime, duration: mediaElement.duration };
-
 							}
 				        });
 					 }
@@ -305,13 +308,15 @@
 			};
 
 			const songClicked = (songName) => {
-				<% if (typeof user == 'undefined') { %>
+				if (songName == "presentation") {
+					makeSong(songName, true);
+				} else if (!user) {
 					$("#modalAuth").modal('toggle');
-				<% } else { %>
+				} else {
 					if (time != null)
 						sendTimeToServer();
 					makeSong(songName, true);
-				<% } %>
+				}
 			};
 
 			const toggleForm = () => {

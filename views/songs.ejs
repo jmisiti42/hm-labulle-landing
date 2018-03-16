@@ -31,7 +31,13 @@
 							<td><%- toMinutes(elem.duration) %></td>
 							<td><%= elem.category %></td>
 							<td><%= elem.last == true ? 'Oui' : 'Non' %></td>
-							<td><a href="/remove/song/<%= elem._id %>">Supprimer</a></td>
+							<td>
+								<a href="/edit/song/<%= elem._id %>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+								<span class="separator"></span>
+								<a target="_blank" href="../pdfs/<%= elem.name %>.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+								<span class="separator"></span>
+								<a onClick="return confirm('Sur de vouloir supprimer le podcast <%= elem.name %> ?')" href="/remove/song/<%= elem._id %>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+							</td>
 						</tr>
 					<% }); %>
 				</tbody>
