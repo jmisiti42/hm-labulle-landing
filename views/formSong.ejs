@@ -11,25 +11,27 @@
 	  <title>Backoffice</title>
   </head>
 	<body>
-		<div class="container-fluid">
+		<div class="container">
 			<%- include header.ejs %>
-			<form ref='uploadForm' action="<%= typeof song._id !== 'undefined' ? '/edit/song/' + song._id : '/create/song' %>" encType="multipart/form-data" method="post">
-				Nom du podcast :<br />
-				<input required type="text" value="<%= typeof song.name !== 'undefined' ? song.name : "" %>" name="name"><br /><br />
-				Category du podcast :<br />
-            	<select name="category">
-					<% categorys.forEach((category) => { %>
-	                    <option value="<%= category.name %>"><%= category.name %></option>
-	                <% }) %>
-				</select><br /><br />
-				Le podcast :<br />
-				<input <%= typeof song.name !== 'undefined' ? '' : 'required' %> type="file" name="file" accept="audio/mp3"><br /><br />
-				Le pdf :<br />
-				<input <%= typeof song.name !== 'undefined' ? '' : 'required' %> type="file" name="filePdf" accept="application/pdf"><br /><br />
-				Dernier podcast de la catégorie :<br />
-				<input type="checkbox" value="true" name="last" <%= typeof song.last !== 'undefined' ? song.last == true ? 'checked' : '' : '' %>><br /><br />
-				<input type="submit" value="Envoyer" name="button" />
-			</form>
+			<div class="row" style="font-size: 15px;">
+				<form ref='uploadForm' action="<%= typeof song._id !== 'undefined' ? '/edit/song/' + song._id : '/create/song' %>" encType="multipart/form-data" method="post">
+					Nom du podcast :<br />
+					<input class="col-xs-12" required type="text" value="<%= typeof song.name !== 'undefined' ? song.name : "" %>" name="name"><br /><br />
+					Category du podcast :<br />
+	            	<select class="col-xs-12" name="category">
+						<% categorys.forEach((category) => { %>
+		                    <option value="<%= category.name %>"><%= category.name %></option>
+		                <% }) %>
+					</select><br /><br />
+					Le podcast :<br />
+					<input class="col-xs-12" <%= typeof song.name !== 'undefined' ? '' : 'required' %> type="file" name="file" accept="audio/mp3"><br /><br />
+					Le pdf :<br />
+					<input class="col-xs-12" <%= typeof song.name !== 'undefined' ? '' : 'required' %> type="file" name="filePdf" accept="application/pdf"><br /><br />
+					Dernier podcast de la catégorie :<br />
+					<input type="checkbox" value="true" name="last" <%= typeof song.last !== 'undefined' ? song.last == true ? 'checked' : '' : '' %>><br /><br />
+					<input class="col-xs-offset-3 col-xs-6" type="submit" value="Envoyer" name="button" />
+				</form>
+			</div>
 		</div>
 		<!-- Scripts JS -->
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
