@@ -84,6 +84,22 @@ h3 {
 	color: black;
 }
 
+.formSwapForm {
+	background-color: #424242;
+	border-radius: 20px 20px 20px 20px;
+	padding: 20px 10px 20px 10px;
+	height: 150px;
+}
+
+.formSwapLink {
+	padding: 20px 15px 20px 15px;
+}
+
+.activeLink {
+	background-color: #424242;
+	border-radius: 20px 20px 0px 0px;
+}
+
 .modal-header, .modal-footer {
 	border-color: #51E99D;
 }
