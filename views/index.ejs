@@ -161,11 +161,11 @@
 				<% } %>
 			</div> <!-- INFOS / FORMULAIRE -->
 			<div class="row categoryBody">
-				<% categories.forEach((categorie) => { %>
-					<div class="col-xs-offset-1 col-md-4 col-xs-10 category">
+				<% categories.forEach((categorie, index) => { %>
+					<div class="col-xs-offset-1 <%= index % 2 == 0 ? 'col-md-offset-1' : '' %> col-md-4 col-xs-10 category">
 						<div class="row"><div class="col-xs-12"><h3><%= categorie.name %></h3></div></div> <!-- TITRE -->
 						<div class="categoryDesc row">
-							<div class="col-xs-4" style="height: 100%;"><img class="list-img" src="../images/<%= categorie.image %>" /></div>
+							<div class="col-xs-4"><img class="list-img" src="../images/<%= categorie.image %>" /></div>
 							<div class="col-xs-8"><p><%= categorie.description %></p></div>
 						</div> <!-- IMAGE / DESCRIPTION -->
 						<br />
@@ -180,12 +180,11 @@
 									<div class="whiteloadingbar"><% if (typeof timeRead !== 'undefined') { %><div class="greenloadingbar" id="loadingbar<%= timeRead %>" style="width: <%= (timeRead.time / timeRead.duration) * 100 %>%;"></div><% } %></div></p>
 								</div>
 								<div class="col-xs-1 song"><% if (typeof user !== 'undefined') { %><i onclick="favorite('<%= song.name %>')" class="fa fa-heart heartsong <%- song.name.replace(/\s/g,''); %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i><% } %></div>
-								<div class="col-xs-1 song" style="font-size: 9px; margin-top: 8px;">Version text</div>
-								<div class="col-xs-1 song"><% if (typeof user !== 'undefined') { %><a target="_blank" href="../pdfs/<%= song.name %>.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a><% } %></div>
+								<% if (typeof user !== 'undefined') { %><div class="col-xs-1 song" style="font-size: 9px; margin-top: 8px;">Version text</div><% } %>
+								<% if (typeof user !== 'undefined') { %><div class="col-xs-1 song"><a target="_blank" href="../pdfs/<%= song.name %>.pdf"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></div><% } %>
 							</div>
 						<% }); %>
 					</div><!-- UNE LISTE -->
-					<div class="col-xs-1"></div>
 				<% }); %>
 			</div> <!-- LISTES -->
 			<div style="background-color: #666666; color: white; padding: 20px 0 70px 0;" class="row">
