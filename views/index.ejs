@@ -210,10 +210,15 @@
 		<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/mediaelement@4.2.8/build/mediaelement-and-player.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script src="/javascript/jquery.cookie.js"></script>
 		<script>
 			let user = <% if (typeof user !== 'undefined') { %><%- JSON.stringify(user) %><% } else { %>null<% } %>;
 			let categories = <%- JSON.stringify(categories) %>
 			let time = null;
+			let vol = 0.2;
+			if ($.cookie('volume')) {
+				vol = parseFloat($.cookie('volume'));
+			}
 			let categoryHeight = 0;
 
 			jQuery(document).ready(function ($) {
@@ -278,16 +283,20 @@
 							if (songCurrentTime) mediaElement.setCurrentTime(songCurrentTime.time >= mediaElement.duration ? 0 : songCurrentTime.time);
 							else mediaElement.setCurrentTime(0);
 							if (autoPlay) {
-								console.log("play");
 								mediaElement.play();
 							}
 						});
 						mediaElement.addEventListener('timeupdate', function() {
+							mediaElement.setVolume(vol);
 							if (mediaElement.currentTime > 1 && user) {
 								let index = user.timeRead.findIndex((elem) => { return elem.name == songName });
 								if (index > -1) user.timeRead[index].time = mediaElement.currentTime;
 								time = { name: songName, time: mediaElement.currentTime, duration: mediaElement.duration };
 							}
+				        });
+						mediaElement.addEventListener('volumechange', function() {
+							$.cookie('volume', mediaElement.getVolume(), { expires: 31 });
+							vol = mediaElement.getVolume() == 0.8 ? vol : mediaElement.getVolume();
 				        });
 					 }
 				});

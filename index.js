@@ -58,6 +58,10 @@ app.get('/categorys', authController.isLoggedIn, authController.isAdmin, categor
 app.post('/create/category', authController.isLoggedIn, authController.isAdmin, categoryController.createCategory);
 //create new category view
 app.get('/create/category', authController.isLoggedIn, authController.isAdmin, categoryController.showFormCategory);
+//edit category
+app.post('/edit/category/:id', authController.isLoggedIn, authController.isAdmin, categoryController.editCategory);
+//edit category view
+app.get('/edit/category/:id', authController.isLoggedIn, authController.isAdmin, categoryController.showFormCategory);
 //remove a category
 app.get('/remove/category/:id', authController.isLoggedIn, authController.isAdmin, categoryController.removeCategory);
 

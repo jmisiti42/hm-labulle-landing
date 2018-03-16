@@ -14,13 +14,13 @@
 		<div class="container">
 			<%- include header.ejs %>
 			<div class="row" style="font-size: 15px;">
-				<form ref='uploadForm' action="/create/category" encType="multipart/form-data" method="post">
+				<form ref='uploadForm' action="<%= typeof category._id !== 'undefined' ? '/edit/category/' + category._id : '/create/category' %>" encType="multipart/form-data" method="post">
 					Nom de la categorie :<br />
-					<input class="col-xs-12" required type="text" name="name"><br /><br />
+					<input class="col-xs-12" required type="text" value="<%= category.name %>" name="name"><br /><br />
 					Description :<br />
-					<input class="col-xs-12" required type="text" name="description"><br /><br />
+					<input class="col-xs-12" required type="text" value="<%= category.description %>" name="description"><br /><br />
 					Image de présentation :<br />
-					<input class="col-xs-12" required type="file" name="image" accept="image/*"><br /><br />
+					<input class="col-xs-12" <%= typeof category.name !== 'undefined' ? '' : 'required' %> type="file" name="image" accept="image/*"><br /><br />
 					<input class="col-xs-offset-3 col-xs-6" type="submit" value="Envoyer" name="button" />
 				</form>
 			</div>

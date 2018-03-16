@@ -29,7 +29,11 @@
 								<td><%= elem.name %></td>
 								<td><%= elem.description %></td>
 								<td><img width="100px" src="/images/<%= elem.image %>" /></td>
-								<td><a href="/remove/category/<%= elem._id %>">Supprimer</a></td>
+								<td>
+									<a href="/edit/category/<%= elem._id %>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+									<span class="separator"></span>
+									<a onClick="return confirm('Sur de vouloir supprimer la categorie <%= elem.name %> ?')" href="/remove/category/<%= elem._id %>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+								</td>
 							</tr>
 						<% }); %>
 				</tbody>

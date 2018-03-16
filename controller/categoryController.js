@@ -33,7 +33,22 @@ const CategoryController = function () {
 	};
 
 	this.showFormCategory = (req, res) => {
-		res.render('formCategory');
+		let params = { category: {} };
+		let id = req.params.id ? req.params.id : null;
+		if (id) {
+			Category.findOne({ _id: id }).exec((err, category) => {
+				if (category) {
+					params.category = category;
+					res.render('formCategory', params);
+				} else {
+					params.category = {};
+					res.render('formCategory', params);
+				}
+			});
+		} else {
+			params.category = {};
+			res.render('formCategory', params);
+		}
 	};
 
 	this.createCategory = (req, res) => {
@@ -56,6 +71,41 @@ const CategoryController = function () {
 				});
 			}
 		});
+	};
+
+	this.editCategory = (req, res) => {
+		if (!req.body.name) return o.showView(req, res, { msg: ["Veuillez renseigner le nom de la categorie."] });
+		if (!req.body.description) return o.showView(req, res, { msg: ["Veuillez renseigner la description."] });
+		let saved = false;
+		Category.findOne({ _id: req.params.id }).exec((err, category) => {
+			if (category) {
+				if (req.files && req.files.image) {
+					let file = req.files.image;
+					file.mv(`${__dirname}/../public/images/${req.files.image.name}`, (err) => {
+						if (err) return o.showView(req, res, { msg: [err.message] });
+						else {
+							category.image = req.files.image.name;
+							saved = true;
+						}
+					});
+				} else { saved = true; }
+
+				category.name = req.body.name;
+				category.description = req.body.description;
+				const saveCategory = () => {
+					if (saved == false) {
+						setTimeout(saveSong, 1000);
+					} else {
+						category.save((err) => {
+							if (err) return o.showView(req, res, { msg: [err.message] });
+							else return o.showView(req, res, { msgOk: [`${req.body.name} enregistré avec succès !`] });
+						});
+					}
+				};
+				saveCategory();
+			} else { return o.showView(req, res, { msgOk: [`Une erreur est survenue !`] });}
+		});
+
 	};
 }
 
