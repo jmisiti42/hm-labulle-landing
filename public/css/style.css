@@ -25,6 +25,12 @@ a, a:hover, a:focus, a:visited, a:target {
 	color: white;
 }
 
+.fa-play-circle, .fa-lock {
+	font-size: 20px;
+	padding-top: 10px;
+	color: #EF4C6C;
+}
+
 .mejs_liked {
 	color: #EF4C6C;
 }
@@ -65,7 +71,7 @@ a, a:hover, a:focus, a:visited, a:target {
 
 .category {
 	border-radius: 40px;
-	padding: 0px 25px 0px 25px;
+	padding: 0px 25px 15px 25px;
 	background-color: #51E99D;
 }
 
@@ -138,21 +144,18 @@ h3 {
 	text-decoration: none;
 }
 
-.fa-play-circle, .fa-lock {
-	font-size: 20px;
-	padding-top: 10px;
-	color: #EF4C6C;
+.avis {
+	height: 40px;
+	width: 170px;
 }
 
-.avisButton {
+.button {
 	display: block;
 	margin: auto;
 	text-decoration: none !important;
 	text-align: center;
 	background-color: #51E99D;
 	color: white;
-	height: 40px;
-	width: 170px;
 	padding: 10px 0 10px 0;
 	border-radius: 40px;
 }
@@ -183,6 +186,19 @@ h3 {
 .list-img {
 	margin: auto;
 	width: 100%;
+}
+
+.presentationSong .fa-play-circle {
+	font-size: 45px;
+}
+
+.presentationSong {
+	padding-top: 0;
+}
+
+.presentationText {
+	padding-top: 20px;
+	padding-left: 0;
 }
 
 h1 .title {
