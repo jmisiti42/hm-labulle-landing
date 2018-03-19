@@ -123,16 +123,12 @@
 			<div style="background-color: #2d2d2d; color: white; padding: 20px 0px 20px 0px;" class="row">
 				<div class="<% if (typeof user !== 'undefined') { %>col-xs-12<% } else { %>col-md-8<% } %>">
 					<div class="row">
-						<div class="col-xs-3"><img class="hm-logo" src="../images/hm-logo.jpg" /></div> <!-- LOGO -->
-						<div class="col-xs-9 greenborder">
+						<div class="col-md-3 hidden-xs"><img class="hm-logo" src="../images/hm-logo.jpg" /></div> <!-- LOGO -->
+						<div class="col-md-9 greenborder">
 							<p>BIENVENUE DANS LA BULLE HELLO MARCEL, LE COACH AUDIO EN PARENTALITE<br /><br />Parce que quand on est parents, on a plein de questions et peu de temps pour y répondre, nous avons imaginé La Bulle Hello Marcel : des programmes audio courts qui s’adressent à tous les parents et traiteront de thèmes variés (autonomie, développement de la créativité, sommeil, concentration et canalisation de l’énergie ou encore relations dans la fratrie…).<br /><br />En quelques minutes, chaque écoute vous apporte un décryptage et des clés essentielles pour faire votre propre chemin avec vos enfants, sur le thème choisi.<br />Bonne écoute !</p>
 							<br />
-							<div onclick="songClicked(`presentation.mp3`);" class="song row">
-								<div class="col-xs-4"></div>
-								<div style="background-color: red;">
-									<div class="col-xs-1"><i class="fa fa-play-circle" style="font-size: 50px;" aria-hidden="true"></i></div>
-									<div class="col-xs-5" style="padding-top: 25px;"><p><span>Présentation de La Bulle</span></p></div>
-								</div>
+							<div class="text-center row">
+								<span class="presentation" onclick="songClicked(`presentation.mp3`);"><i class="fa fa-play-circle" style="font-size: 40px;" aria-hidden="true"></i><span style="position: relative; bottom: 10px; left: 3px;">Présentation de La Bulle</span>&nbsp;</span>
 							</div>
 						</div> <!-- TEXT / AUDIO -->
 					</div>
