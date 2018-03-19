@@ -127,7 +127,13 @@
 						<div class="col-xs-9 greenborder">
 							<p>BIENVENUE DANS LA BULLE HELLO MARCEL, LE COACH AUDIO EN PARENTALITE<br /><br />Parce que quand on est parents, on a plein de questions et peu de temps pour y répondre, nous avons imaginé La Bulle Hello Marcel : des programmes audio courts qui s’adressent à tous les parents et traiteront de thèmes variés (autonomie, développement de la créativité, sommeil, concentration et canalisation de l’énergie ou encore relations dans la fratrie…).<br /><br />En quelques minutes, chaque écoute vous apporte un décryptage et des clés essentielles pour faire votre propre chemin avec vos enfants, sur le thème choisi.<br />Bonne écoute !</p>
 							<br />
-							<div onclick="songClicked(`presentation.mp3`);" class="song row"><div class="col-xs-4"></div><div class="col-xs-5"><p><i class="fa fa-play-circle" style="font-size: 50px;" aria-hidden="true"></i>&nbsp;<span class="presentationText">Présentation de La Bulle</span></p></div></div>
+							<div onclick="songClicked(`presentation.mp3`);" class="song row">
+								<div class="col-xs-4"></div>
+								<div style="background-color: red;">
+									<div class="col-xs-1"><i class="fa fa-play-circle" style="font-size: 50px;" aria-hidden="true"></i></div>
+									<div class="col-xs-5" style="padding-top: 25px;"><p><span>Présentation de La Bulle</span></p></div>
+								</div>
+							</div>
 						</div> <!-- TEXT / AUDIO -->
 					</div>
 				</div> <!-- INFOS -->
@@ -182,7 +188,7 @@
 									</div>
 									<% if (typeof user !== 'undefined') { %>
 										<div class="col-xs-1 song"><i onclick="favorite(`<%= song.fileName %>`)" class="fa fa-heart heartsong <%- song.fileName.replace(/\s/g,'').split('.')[0]; %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i></div>
-										<div class="col-xs-1 text-center song"><a target="_blank" title="Version text" href="../pdfs/<%= song.pdfName %>"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></div>
+										<div class="col-xs-1 text-center song"><a target="_blank" title="Version texte" href="../pdfs/<%= song.pdfName %>"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a></div>
 									<% } %>
 								</div>
 							<% }); %>
