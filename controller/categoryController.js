@@ -94,7 +94,7 @@ const CategoryController = function () {
 				category.description = req.body.description;
 				const saveCategory = () => {
 					if (saved == false) {
-						setTimeout(saveSong, 1000);
+						setTimeout(saveCategory, 1000);
 					} else {
 						category.save((err) => {
 							if (err) return o.showView(req, res, { msg: [err.message] });

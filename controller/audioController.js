@@ -44,7 +44,7 @@ const AudioController = function () {
 			if (err) return res.json({ "error": true });
 			if (!_user) return res.json({ "error": "no user"});
 			Device.find({ userId: req.session.user._id }).exec((err, devices) => {
-				if (devices.findIndex((elem) => { return elem.ipHash == hasha(req.ip, { algorithm: "whirlpool" }); }) > -1) {
+				if (req.ip && devices.findIndex((elem) => { return elem.ipHash == hasha(req.ip, { algorithm: "whirlpool" }) }) > -1) {
 					if (devices.findIndex((elem) => { return elem.device == req.device.type }) == -1) {
 						let device = new Device();
 						device.device = req.device.type;
@@ -131,10 +131,9 @@ const AudioController = function () {
 	this.editSong = (req, res) => {
 		if (!req.body.name) return o.showView(req, res, { msg: ["Veuillez renseigner le nom du podcast."] });
 		if (!req.body.category) return o.showView(req, res, { msg: ["Veuillez renseigner la categorie du podcast."] });
-		if (!req.body.id) return o.showView(req, res, { msg: ["Une erreur est survenue."] });
 		let saved = req.files.file ? false : true;
 		let savedPdf = req.files.filePdf ? false : true;
-		Song.findOne({ _id: req.body.id }).exec((err, song) => {
+		Song.findOne({ _id: req.params.id }).exec((err, song) => {
 			if (err) return o.showView(req, res, { msg: [err.message] });
 			if (!song) return o.showView(req, res, { msg: ["Une erreur est survenue."] });
 			let file = req.files.file;
