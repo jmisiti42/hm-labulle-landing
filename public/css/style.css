@@ -197,8 +197,7 @@ h3 {
 }
 
 .presentationText {
-	padding-top: 20px;
-	padding-left: 0;
+	margin-top: -20px !important;
 }
 
 h1 .title {
