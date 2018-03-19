@@ -26,7 +26,7 @@ a, a:hover, a:focus, a:visited, a:target {
 }
 
 .mejs_liked {
-	color: #2F8358;
+	color: #EF4C6C;
 }
 
 .mejs_like {
@@ -47,7 +47,7 @@ a, a:hover, a:focus, a:visited, a:target {
 .fa-file-pdf-o {
 	font-size: 20px !important;
 	padding-top: 10px;
-	color: red;
+	color: #EF4C6C;
 }
 
 .whiteloadingbar {
@@ -113,7 +113,7 @@ h3 {
 }
 
 .greenloadingbar {
-	background-color: #2F8358;
+	background-color: #EF4C6C;
 	height: 4px;
 }
 
@@ -141,6 +141,7 @@ h3 {
 .fa-play-circle, .fa-lock {
 	font-size: 20px;
 	padding-top: 10px;
+	color: #EF4C6C;
 }
 
 .avisButton {

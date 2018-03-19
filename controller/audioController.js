@@ -104,19 +104,22 @@ const AudioController = function () {
 		if (!req.body.category) return o.showView(req, res, { msg: ["Veuillez renseigner la categorie du podcast."] });
 		let file = req.files.file;
 		let filePdf = req.files.filePdf;
-		file.mv(`${__dirname}/../public/audios/${req.body.name}.mp3`, (err) => {
+		let fileName = file.name;
+		file.mv(`${__dirname}/../public/audios/${fileName}`, (err) => {
 			if (err) return o.showView(req, res, { msg: [err.message] });
 			else {
-				filePdf.mv(`${__dirname}/../public/pdfs/${req.body.name}.pdf`, (err) => {
+				filePdf.mv(`${__dirname}/../public/pdfs/${filePdf.name}.pdf`, (err) => {
 					if (err) return o.showView(req, res, { msg: [err.message] });
 					else {
-						mp3Duration(`${__dirname}/../public/audios/${req.body.name}.mp3`, function (err, duration) {
+						mp3Duration(`${__dirname}/../public/audios/${fileName}`, function (err, duration) {
 							if (err) return o.showView(req, res, { msg: [err.message] });
 							let song = new Song();
 							song.category = req.body.category;
 							song.name = req.body.name;
 							song.duration = duration;
 							song.last = req.body.last == 'true' ? true : false;
+							song.fileName = fileName;
+							song.pdfName = filePdf.name;
 							song.save((err) => {
 								if (err) return o.showView(req, res, { msg: [err.message] });
 								else return o.showView(req, res, { msgOk: [`${req.body.name}.mp3 enregistré avec succès !`] });
@@ -138,13 +141,15 @@ const AudioController = function () {
 			if (!song) return o.showView(req, res, { msg: ["Une erreur est survenue."] });
 			let file = req.files.file;
 			let filePdf = req.files.filePdf;
+			let fileName = file ? file.name : null;
 			if (file) {
-				file.mv(`${__dirname}/../public/audios/${req.body.name}.mp3`, (err) => {
+				file.mv(`${__dirname}/../public/audios/${fileName}`, (err) => {
 					if (err) return o.showView(req, res, { msg: [err.message] });
 					else {
-						mp3Duration(`${__dirname}/../public/audios/${req.body.name}.mp3`, function (err, duration) {
+						mp3Duration(`${__dirname}/../public/audios/${fileName}`, function (err, duration) {
 							if (err) return o.showView(req, res, { msg: [err.message] });
 							song.duration = duration;
+							song.fileName = fileName;
 							song.save((err) => {
 								if (err) return o.showView(req, res, { msg: [err.message] });
 								saved = true;
@@ -154,8 +159,9 @@ const AudioController = function () {
 				});
 			}
 			if (filePdf) {
-				filePdf.mv(`${__dirname}/../public/pdfs/${req.body.name}.pdf`, (err) => {
+				filePdf.mv(`${__dirname}/../public/pdfs/${filePdf.name}.pdf`, (err) => {
 					if (err) return o.showView(req, res, { msg: [err.message] });
+					song.pdfName = filePdf.name;
 					savedPdf = true;
 				});
 			}
