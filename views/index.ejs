@@ -174,7 +174,7 @@
 							<br />
 							<% categorie.songs.forEach((song) => { %>
 								<% if (typeof user !== 'undefined') { %>
-									<% var timeRead = user.timeRead.find((elem) => { return elem.name == song.name }); %>
+									<% var timeRead = user.timeRead.find((elem) => { return elem.name == song.fileName }); %>
 									<% var liked = user.likes.findIndex((elem) => { return elem.name == song.fileName.replace(/\s/g,'').split('.')[0] }); %>
 								<% } %>
 								<div class="row">
