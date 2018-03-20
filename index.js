@@ -75,6 +75,8 @@ app.get('/user/:mail', authController.isLoggedIn, authController.isAdmin, boCont
 app.get('/songs', authController.isLoggedIn, authController.isAdmin, audioController.showView);
 //create new song
 app.post('/create/song', authController.isLoggedIn, authController.isAdmin, audioController.createSong);
+//create new song
+app.post('/lastread/song', authController.isLoggedIn, audioController.lastRead);
 //create new song view
 app.get('/create/song', authController.isLoggedIn, authController.isAdmin, audioController.showFormSong);
 //edit song
@@ -111,4 +113,4 @@ app.post('/repassword', authController.getPassword);
 app.post('/updateTime', authController.isLoggedIn, audioController.updateTime);
 
 
-http.createServer(app).listen(5001, () => console.log(`listening on port 5001`));
+http.createServer(app).listen(5001, () => console.log(`Hello Marcel La Bulle listening on port 5001`));

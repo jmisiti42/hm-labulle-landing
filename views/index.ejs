@@ -4,9 +4,9 @@
 	  <meta name="viewport" content="width=device-width" />
 	  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"/>
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	  <link rel="stylesheet" href="/css/style.css">
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
 	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.8/build/mediaelementplayer.min.css">
+	  <link rel="stylesheet" href="/css/style.css">
 	  <meta name="description" content="La Bulle, le nouveau programme audio d’Hello Marcel qui permet aux parents en quelques minutes par jour de se poser et réfléchir sur des questions de parentalité du quotidien." />
 	  <meta name="keywords" content="hello marcel, concentration, autonomie, la bulle, parentalité, audio, podcast, famille, enfant, conseil, programme, media, coach" />
 	  <title>La Bulle</title>
@@ -123,8 +123,9 @@
 			<div style="background-color: #2d2d2d; color: white; padding: 20px 0px 20px 0px;" class="row">
 				<div class="<% if (typeof user !== 'undefined') { %>col-xs-12<% } else { %>col-md-8<% } %>">
 					<div class="row">
-						<div class="col-md-3 hidden-xs"><img class="hm-logo" src="../images/hm-logo.jpg" /></div> <!-- LOGO -->
+						<div class="col-md-3 visible-md visible-xl visible-lg"><img class="hm-logo" src="../images/hm-logo.jpg" /></div> <!-- LOGO -->
 						<div class="col-md-9 greenborder">
+							<div class="visible-xs visible-sm" style="margin: auto;width: 100px"><img class="hm-logo" src="../images/hm-logo.jpg" /></div>
 							<p>BIENVENUE DANS LA BULLE HELLO MARCEL, LE COACH AUDIO EN PARENTALITE<br /><br />Parce que quand on est parents, on a plein de questions et peu de temps pour y répondre, nous avons imaginé La Bulle Hello Marcel : des programmes audio courts qui s’adressent à tous les parents et traiteront de thèmes variés (autonomie, développement de la créativité, sommeil, concentration et canalisation de l’énergie ou encore relations dans la fratrie…).<br /><br />En quelques minutes, chaque écoute vous apporte un décryptage et des clés essentielles pour faire votre propre chemin avec vos enfants, sur le thème choisi.<br />Bonne écoute !</p>
 							<br />
 							<div class="text-center row">
@@ -293,15 +294,21 @@
 						mediaElement.addEventListener('loadedmetadata', function(){
 							let songCurrentTime;
 							if (user) {
-								$('.mejs__controls').append(`<div onclick="favorite('${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? songName : songName}');" class="${songName.replace(/\s/g,'').split('.')[0]} mejs__button ${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? 'mejs_liked' : 'mejs_like'}"><i class="fa fa-heart fa-heart-spe" aria-hidden="true"></i></div>`);
+								$('.mejs__controls').append(`<div onclick="favorite('${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? songName : songName}');" class="${songName.replace(/\s/g,'').split('.')[0]} mejs__button ${user.likes.findIndex((elem) => { return elem.name == songName.replace(/\s/g,'').split('.')[0]; }) > -1 ? 'mejs_liked' : 'mejs_like'}"><i class="fa fa-heart fa-heart-spe" aria-hidden="true"></i></div>`);
 								songCurrentTime = user.timeRead.find((elem) => { return elem.name == songName });
 							}
-							$('.mejs__controls').prepend(`<div style="padding-top: 8px; margin-right: 5px;" class="mejs__button"><img width="34" src="${image}"/></div>`);
-							$('.mejs__controls').prepend(`<div style="font-size: 10px; width: ${Math.ceil((categoryName.length + songName.length) * 5.1)}px;padding-top: 18px; margin-right: 5px; color: white;" class="mejs__button">${categoryName} ${categoryName.length >= 1 ? '-' : ''} ${songMp3}</div>`);
+							$('.mejs__controls').prepend(`<div class="hidden-xs" style="width: 30px; background-color: black; height: 100%; z-index: 9000;"></div><div class="hidden-xs titleSong mejs__button">${categoryName} ${categoryName.length >= 1 ? '-' : ''} ${songMp3}</div>`);
+							$('.mejs__controls').prepend(`<div style="padding-top: 8px; z-index: 9000; background-color: black;" class="mejs__button"><img width="34" src="${image}"/></div>`);
 							if (songCurrentTime) mediaElement.setCurrentTime(songCurrentTime.time >= mediaElement.duration ? 0 : songCurrentTime.time);
 							else mediaElement.setCurrentTime(0);
 							if (autoPlay) {
 								mediaElement.play();
+								function repeat() {
+									$(".titleSong").css({"left":'-60px'}).show();
+									$(".titleSong").animate({left:'+=240px'},5000);
+									$('.titleSong').delay(0).fadeOut(0,repeat);
+								}
+								repeat();
 							}
 						});
 						mediaElement.addEventListener('timeupdate', function() {
@@ -332,12 +339,28 @@
 				});
 			};
 
+			const sendLastSongReaded = (songId) => {
+				$.post('/lastread/song', { id: songId }, (datas) => {
+					console.log(datas);
+				});
+			};
+
 			const songClicked = (songName) => {
 				if (songName.indexOf("presentation") > -1) {
 					makeSong(songName, true);
 				} else if (!user) {
 					$("#modalAuth").modal('toggle');
 				} else {
+					let song = null;
+					categories.forEach((categorie) => {
+						let s = categorie.songs.find((el) => {
+							return el.fileName == songName;
+						});
+						if (s) song = s;
+					});
+					if (song != null) {
+						if (song.last == true) { sendLastSongReaded(song._id); }
+					}
 					if (time != null)
 						sendTimeToServer();
 					makeSong(songName, true);

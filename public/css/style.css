@@ -199,6 +199,27 @@ h3 {
 	font-size: 45px;
 }
 
+.mejs__button {
+	background-color: black;
+	z-index: 7000;
+}
+
+.mejs__button>button {
+	background-color: black;
+	z-index: 8000
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.mejs__time, .mejs__time-rail {
+	background-color: black;
+	z-index: 8000
+}
+
+.mejs__time-rail {
+	margin-left: 0;
+}
+
 .presentationSong {
 	padding-top: 0;
 }
@@ -207,7 +228,20 @@ h3 {
 	margin-top: -20px !important;
 }
 
+.titleSong {
+	font-size: 10px;
+	z-index: 0;
+	width: 150px;
+	padding-top: 18px;
+	position: relative;
+	margin-right: 5px;
+	color: white;
+	z-index: 0;
+	background-color: rgba(0, 0, 0, 0);
+}
+
 h1 .title {
+	font-family: brandon;
 	font-size: 10px;
 }
 

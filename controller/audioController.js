@@ -9,6 +9,12 @@ const path					= require('path');
 const formidable			= require('formidable');
 const mp3Duration			= require('mp3-duration');
 const hasha 				= require('hasha');
+const mailchimpInstance		= config.mailchimp.instance;
+const mailchimpApiKey		= config.mailchimp.key;
+const concentrationId		= config.mailchimp.concentrationId;
+const autonomieId			= config.mailchimp.autonomieId;
+const Mailchimp 			= require('mailchimp-api-v3');
+const mailchimp 			= new Mailchimp(mailchimpApiKey);
 const User 					= mongoose.model('User');
 const Song 					= mongoose.model('Song');
 const Device 				= mongoose.model('Device');
@@ -37,6 +43,59 @@ const AudioController = function () {
 		}
 		else
 			res.render('index', params);
+	};
+
+	const addToList = (code, usrMail) => {
+		if (code == 0) {
+			mailchimp.post('/lists/' + concentrationId + '/members', {
+				email_address : usrMail,
+				status : 'subscribed'
+			}).then(function(results) {
+				console.log('New mailchimp user added successfully !');
+			}).catch(function (err) {
+				if (err.title == "Member Exists")
+					console.log('Mailchimp member already exist !');
+				else if (err.title == "Invalid Resource")
+					console.log('Mailchimp error, wait before sending mail');
+				else {
+					console.log('mailchimp error : ', err.detail);
+				}
+			});
+		} else if (code == 1) {
+			mailchimp.post('/lists/' + autonomieId + '/members', {
+				email_address : usrMail,
+				status : 'subscribed'
+			}).then(function(results) {
+				console.log('New mailchimp user added successfully !');
+			}).catch(function (err) {
+				if (err.title == "Member Exists")
+					console.log('Mailchimp member already exist !');
+				else if (err.title == "Invalid Resource")
+					console.log('Mailchimp error, wait before sending mail');
+				else {
+					console.log('mailchimp error : ', err.detail);
+				}
+			});
+		}
+	};
+
+	this.lastRead = (req, res) => {
+		let sid = req.body.id;
+		Song.findOne({ _id: sid }, { category: 1, last: 1 }).exec((err, s) => {
+			if (s && s.last == true) {
+				if (req.session.user.likes.findIndex((elem) => { return elem.name ==  s.fileName.replace(/\s/g,'').split('.')[0] }) > -1) {
+					return res.json("Ok");
+				}
+				if (s.category == "Développer la concentration") {
+					addToList(0, req.session.user.mail);
+				} else if (s.category == "Développer l'autonomie") {
+					addToList(1, req.session.user.mail);
+				}
+				res.json("Ok");
+			} else {
+				res.json("Error");
+			}
+		});
 	};
 
 	this.updateTime = (req, res) => {

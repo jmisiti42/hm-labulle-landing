@@ -7,6 +7,11 @@ const nodemailer			= require('nodemailer');
 const User 					= mongoose.model('User');
 const Song 					= mongoose.model('Song');
 const Category 				= mongoose.model('Category');
+const mailchimpInstance		= config.mailchimp.instance;
+const mailchimpApiKey		= config.mailchimp.key;
+const inscritsId			= config.mailchimp.inscritsId;
+const Mailchimp 			= require('mailchimp-api-v3');
+const mailchimp 			= new Mailchimp(mailchimpApiKey);
 const hasha 				= require('hasha');
 const generatePwd			= require('password-generator');
 const ipAddress 			= new Array();
@@ -212,6 +217,20 @@ const AuthController = function () {
 						new User(req.body).save((error, userSaved) => {
 							if (error) { o.showView(req, res, { msg: [error.message] }); }
 							else {
+								mailchimp.post('/lists/' + inscritsId + '/members', {
+									email_address : userSaved.mail,
+									status : 'subscribed'
+								}).then(function(results) {
+									console.log('New mailchimp user added successfully !');
+								}).catch(function (err) {
+									if (err.title == "Member Exists")
+										console.log('Mailchimp member already exist !');
+									else if (err.title == "Invalid Resource")
+										console.log('Mailchimp error, wait before sending mail');
+									else {
+										console.log('mailchimp error : ', err.detail);
+									}
+								});
 								req.session.user = userSaved;
 								req.session.save((err) => {
 									res.redirect('/');
