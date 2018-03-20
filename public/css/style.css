@@ -116,6 +116,8 @@ h3 {
 	padding: 25px;
 	border-radius: 25px;
 	border-color: #51E99D;
+	background-image: url('/images/FamilyTime3.png');
+	color: white;
 }
 
 .greenloadingbar {
