@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	  <meta name="viewport" content="width=device-width" />
+	  <link rel="shortcut icon" type="image/x-icon" href="./images/favicon.ico"/>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	  <link rel="stylesheet" href="/css/style.css">
+	  <link rel="stylesheet" href="/css/backoffice.css">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.8/build/mediaelementplayer.min.css">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+	  <title>Backoffice</title>
+  </head>
+	<body>
+		<div class="container-fluid text-center">
+			<%- include header.ejs %>
+			<div class="row">
+				<div class="col-xs-12">
+						<div style="z-index: 90000000000;" class="modal fade" id="modalUser" role="dialog">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title"></h4>
+									</div>
+									<div class="modal-body">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="header">
+							<h4 class="text-center">Podcasts écoutés</h4>
+						</div>
+						<div class="content">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="form-group">
+										<div class="col-sm-5">
+											<label class="text-center control-label">Après le :</label>
+											<div class='input-group date' id='beginDateTimePicker'>
+												<input type='text' class="form-control" name="begin_date" value=""/>
+												<span class="input-group-addon">
+									                <span class="glyphicon glyphicon-calendar"></span>
+									            </span>
+											</div>
+										</div>
+										<div class="col-sm-2 text-center" style="margin-top: 25px;">
+				                            <input id="submitButton" type="submit" class="btn btn-primary" value="Chercher"/>
+										</div>
+										<div class="col-sm-5">
+											<label class="text-center control-label">Avant le :</label>
+											<div class='input-group date' id='endDateTimePicker'>
+												<input type='text' class="form-control" name="end_date" value=""/>
+												<span class="input-group-addon">
+									                <span class="glyphicon glyphicon-calendar"></span>
+									            </span>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-12">
+										<table id="table" style="width: 100%;">
+											<thead>
+												<tr>
+												    <th>Address mail</th>
+													<th>Nb podcasts vue</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		<!-- Scripts JS -->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment-with-locales.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+		<script>
+			$(document).ready(() => {
+				var table = $('#table').DataTable({
+					"order": [[ 1, "desc" ]],
+					"ajax": {
+						"url": "/getViewed",
+						"type": "GET",
+						"data": { beginDate: 1496268000000, endDate: 1898550000000 }
+					},
+					"columns": [
+						{ "data": "mail" },
+						{ "data": "count" },
+					],
+					"iDisplayLength": 50,
+					"processing": true,
+					"pagingType": "full_numbers",
+					"search": {
+						"smart": true,
+						"regex": true
+					}
+				});
+
+				$('#submitButton').click(() => {
+					var endD = 		$('#endDateTimePicker').find("input").val().toString().split(" ")[0].split("/");
+					var beginD = 	$('#beginDateTimePicker').find("input").val().toString().split(" ")[0].split("/");
+					var endDate = 	new Date(`${endD[1]} ${endD[0]} ${endD[2]}`).getTime().toString();
+					var beginDate = new Date(`${beginD[1]} ${beginD[0]} ${beginD[2]}`).getTime().toString();
+					console.log(endDate, beginDate);
+					table = $('#table').DataTable({
+						"destroy": true,
+						"order": [[ 1, "desc" ]],
+						"ajax": {
+							"url": "/getViewed",
+							"type": "GET",
+							"data": { beginDate, endDate }
+						},
+						"columns": [
+							{ "data": "mail" },
+							{ "data": "count" },
+						],
+						"iDisplayLength": 50,
+						"processing": true,
+						"pagingType": "full_numbers",
+						"search": {
+							"smart": true,
+							"regex": true
+						}
+					});
+				});
+
+				$(document).on('click', '#table tbody td:first-child', (e) => {
+					$.get(`/user/${e.target.childNodes[0].data}`, {}, (datas) => {
+						if (datas.error) {
+							console.log(datas.error);
+						} else {
+							let fidelity = 0;
+							$('#modalUser .modal-title').html(datas.user.mail);
+							$('#modalUser .modal-body').html('<table><thead><tr><th>Nom du podcast</th><th>Pourcentage de lecture</th><th>Date de lecture</th></tr></thead><tbody></tbody></table>');
+							datas.listeneds.forEach((elem) => {
+								fidelity += +elem.readed;
+								$('#modalUser .modal-body table tbody').append(`<tr><td>${elem.name}</td><td>${toPercentage(elem.readed)}</td><td>${moment(elem.timestamp).format('MM/DD/YYYY - hh:mm')}</td></tr>`);
+							});
+
+
+							$('#modalUser .modal-body').append(`<br /><table class="text-center"><thead><tr><th>Fidelité</th></tr></thead><tbody><tr><td>${toPercentage(fidelity / datas.listeneds.length)}</td></tr></tbody></table>`);
+
+
+							let stats = new Array();
+							let tot = 0;
+							console.log(datas);
+							datas.devices.forEach((elem) => {
+								stats[elem.device] = stats[elem.device] ? stats[elem.device] + 1 : 1;
+								tot++;
+							});
+							$('#modalUser .modal-body').append('<br /><table id="devicetable"><thead><tr><th>Devices</th><th>Pourcentage</th></tr></thead><tbody></tbody></table>');
+							for (var k in stats){
+							    if (stats.hasOwnProperty(k)) {
+									$('#devicetable tbody').append(`<tr><td>${k}</td><td>${stats[k] / tot * 100}%</td></tr>`);
+							    }
+							}
+
+							$('#modalUser').modal('toggle');
+						}
+					});
+				});
+
+		        $('#beginDateTimePicker, #beginDateTimePicker2').datetimepicker({
+		            locale: 'fr',
+					defaultDate: new Date(1496268000000)
+		        });
+		        $('#endDateTimePicker, #endDateTimePicker2').datetimepicker({
+		            locale: 'fr',
+					defaultDate: new Date(1898550000000)
+		        });
+
+			});
+
+			const toPercentage = (number) => {
+				return `${number.toString().charAt(0)}${number.toString().charAt(1) == "." ? "" : number.toString().charAt(1)}%`
+			};
+		</script>
+	</body>
+</html>
