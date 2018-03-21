@@ -28,14 +28,14 @@
 						<form class="formSwapForm" action="/auth" method="post">
 							<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
 							<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
-	  						<input type="submit" value="Connexion" name="button" /> <br />
-							<a data-toggle="modal" data-dismiss="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
+							<input required autocomplete="off" placeholder="Confirmer" type="password" name="repassword"><br />
+	  						<input type="submit" value="Inscription" name="button" /><br />
 						</form>
 						<form class="formSwapForm" hidden action="/auth" method="post">
 							<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
 							<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
-							<input required autocomplete="off" placeholder="Confirmer" type="password" name="repassword"><br />
-	  						<input type="submit" value="Inscription" name="button" /><br />
+	  						<input type="submit" value="Connexion" name="button" /> <br />
+							<a data-toggle="modal" data-dismiss="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
 						</form>
 					</div>
 					<div class="modal-footer"><p class="text-center">Pour pouvoir écouter les programmes audio de La Bulle, merci de vous connecter ou vous inscrire ci-dessus</p></div>
@@ -144,13 +144,13 @@
 						</div>
 						<div class="row">
 							<div class="col-xs-12">
-								<form class="formSwapForm" action="/auth" method="post">
+								<form class="formSwapForm" hidden action="/auth" method="post">
 									<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
 									<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
 			  						<input type="submit" value="Connexion" name="button" /> <br />
 			  						<a data-toggle="modal" data-target="#modalPassword" href="#">J'ai oublié mon mot de passe.</a>
 								</form>
-								<form class="formSwapForm" hidden action="/auth" method="post">
+								<form class="formSwapForm" action="/auth" method="post">
 									<input required autocomplete="email" placeholder="Adresse email" type="email" name="mail"><br />
 									<input required autocomplete="off" placeholder="Mot de passe" type="password" name="password"><br />
 									<input required autocomplete="off" placeholder="Confirmer" type="password" name="repassword"><br />

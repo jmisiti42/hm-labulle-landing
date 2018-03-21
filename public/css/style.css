@@ -27,7 +27,6 @@ a, a:hover, a:focus, a:visited, a:target {
 
 .fa-play-circle, .fa-lock {
 	font-size: 20px;
-	padding-top: 10px;
 	color: #EF4C6C;
 }
 
@@ -41,7 +40,6 @@ a, a:hover, a:focus, a:visited, a:target {
 
 .heartsong {
 	font-size: 20px !important;
-    padding-top: 10px;
 }
 
 .fa-heart-spe {
@@ -51,7 +49,6 @@ a, a:hover, a:focus, a:visited, a:target {
 
 .fa-file-pdf-o {
 	font-size: 20px !important;
-	padding-top: 10px;
 	color: #EF4C6C;
 }
 
