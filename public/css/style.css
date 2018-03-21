@@ -227,6 +227,8 @@ h1 .title {
 .firstBulle {
 	margin-left: 24%;
 	background-image: url('/images/FamilyTime3.png');
+    background-repeat: no-repeat;
+  background-size: cover;
 	color: white;
 }
 
