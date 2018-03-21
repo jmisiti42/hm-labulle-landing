@@ -311,7 +311,9 @@
 						mediaElement.addEventListener('timeupdate', function() {
 							mediaElement.setVolume(vol);
 							if (mediaElement.currentTime > 1 && user) {
-								let index = user.timeRead.findIndex((elem) => { return elem.name == songName });
+								let index = -1;
+								if (user.timeRead)
+									index = user.timeRead.findIndex((elem) => { return elem.name == songName });
 								if (index > -1) user.timeRead[index].time = mediaElement.currentTime;
 								time = { name: songName, time: mediaElement.currentTime, duration: mediaElement.duration };
 							}
