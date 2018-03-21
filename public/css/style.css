@@ -47,7 +47,6 @@ a, a:hover, a:focus, a:visited, a:target {
 .fa-heart-spe {
 	font-size: 25px;
     padding-top: 10px;
-    padding-left: 5px;
 }
 
 .fa-file-pdf-o {
@@ -116,8 +115,6 @@ h3 {
 	padding: 25px;
 	border-radius: 25px;
 	border-color: #51E99D;
-	background-image: url('/images/FamilyTime3.png');
-	color: white;
 }
 
 .greenloadingbar {
@@ -247,5 +244,14 @@ h1 .title {
 	font-size: 10px;
 }
 
-@media (max-width:1200px) {
+.firstBulle {
+	margin-left: 24%;
+	background-image: url('/images/FamilyTime3.png');
+	color: white;
+}
+
+@media (max-width:991px) {
+	.firstBulle {
+		margin-left: 0;
+	}
 }
