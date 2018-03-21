@@ -96,9 +96,9 @@
 		<% } %>
 		<div class="container-fluid">
 			<div style="background-color: #51E99D;" class="row">
-				<div class="col-xs-6"><img style="width: 250px; padding-top: 5px;" src="/images/hellomarcel-logo.png" /></div> <!-- TITRE HELLO MARCEL -->
+				<div class="col-sm-6"><img style="width: 250px; padding-top: 5px;" src="/images/hellomarcel-logo.png" /></div> <!-- TITRE HELLO MARCEL -->
 				<% if (typeof user !== 'undefined') { %>
-					<div class="col-xs-6"><span class="user-interface"><%= user.mail %><br /><a href="/logout">Se déconnecter</a> &nbsp; &nbsp; <a data-toggle="modal" data-target="#modalAccount" href="#">Mon compte</a><% if (user.admin == true) { %>&nbsp; &nbsp; <a href="/backoffice">Backoffice</a> <% } %></span></div> <!-- INTERFACE USER TODO -->
+					<div class="col-sm-6"><span class="user-interface"><%= user.mail %><br /><a href="/logout">Se déconnecter</a> &nbsp; &nbsp; <a data-toggle="modal" data-target="#modalAccount" href="#">Mon compte</a><% if (user.admin == true) { %>&nbsp; &nbsp; <a href="/backoffice">Backoffice</a> <% } %></span></div> <!-- INTERFACE USER TODO -->
 				<% } %>
 			</div> <!-- HEADER -->
 
