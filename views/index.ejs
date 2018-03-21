@@ -294,16 +294,16 @@
 								$('.mejs__controls').append(`<div onclick="favorite('${user.likes.findIndex((elem) => { return elem.name == songName }) > -1 ? songName : songName}');" class="${songName.replace(/\s/g,'').split('.')[0]} mejs__button ${user.likes.findIndex((elem) => { return elem.name == songName.replace(/\s/g,'').split('.')[0]; }) > -1 ? 'mejs_liked' : 'mejs_like'}"><i class="fa fa-heart fa-heart-spe" aria-hidden="true"></i></div>`);
 								songCurrentTime = user.timeRead.find((elem) => { return elem.name == songName });
 							}
-							$('.mejs__container').prepend(`<div style="position: absolute; width: 30%; z-index: 7000;height: 20px; background-color: black; left: 0;"></div><div class="titleSong mejs__button"><span class="textSong">${categoryName} ${categoryName.length >= 1 ? '-' : ''} ${songMp3}</span></div><div style="position: absolute; width: 30%; z-index: 7000;height: 20px; background-color: black; top: 0;right: 0;"></div>`);
+							$('.mejs__container').prepend(`<div style="position: absolute; width: 20%; z-index: 7000;height: 20px; background-color: black; left: 0;"></div><div class="titleSong mejs__button"><span class="textSong">${categoryName} ${categoryName.length >= 1 ? '-' : ''} ${songMp3}</span></div><div style="position: absolute; width: 20%; z-index: 7000;height: 20px; background-color: black; top: 0;right: 0;"></div>`);
 							$('.mejs__controls').prepend(`<div style="padding-top: 8px; padding-right: 5px;" class="mejs__button"><img width="34" src="${image}"/></div>`);
 							if (songCurrentTime) mediaElement.setCurrentTime(songCurrentTime.time >= mediaElement.duration ? 0 : songCurrentTime.time);
 							else mediaElement.setCurrentTime(0);
 							if (autoPlay) {
 								mediaElement.play();
-
+								let savedWidth=$('.textSong').width();
 								function repeat() {
-									$(".titleSong").css({"left":$(window).width() - ($('.textSong').width() * 1.5)}).show();
-									$(".titleSong").animate({left: 0},10000);
+									$(".titleSong").css({"left": $('.mejs__mediaelement').width() - savedWidth}).show();
+									$(".titleSong").animate({left: 0},15000);
 									$('.titleSong').delay(0).fadeOut(0,repeat);
 								}
 								repeat();
