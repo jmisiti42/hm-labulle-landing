@@ -167,7 +167,7 @@ const AudioController = function () {
 		file.mv(`${__dirname}/../public/audios/${fileName}`, (err) => {
 			if (err) return o.showView(req, res, { msg: [err.message] });
 			else {
-				filePdf.mv(`${__dirname}/../public/pdfs/${filePdf.name}.pdf`, (err) => {
+				filePdf.mv(`${__dirname}/../public/pdfs/${filePdf.name}`, (err) => {
 					if (err) return o.showView(req, res, { msg: [err.message] });
 					else {
 						mp3Duration(`${__dirname}/../public/audios/${fileName}`, function (err, duration) {
@@ -218,7 +218,7 @@ const AudioController = function () {
 				});
 			}
 			if (filePdf) {
-				filePdf.mv(`${__dirname}/../public/pdfs/${filePdf.name}.pdf`, (err) => {
+				filePdf.mv(`${__dirname}/../public/pdfs/${filePdf.name}`, (err) => {
 					if (err) return o.showView(req, res, { msg: [err.message] });
 					song.pdfName = filePdf.name;
 					savedPdf = true;
