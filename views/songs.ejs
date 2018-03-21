@@ -11,7 +11,7 @@
 	  <title>Backoffice</title>
   </head>
 	<body>
-		<div class="container-fluid">
+		<div class="container-fluid text-center">
 			<%- include header.ejs %>
 			<br />
 			<table class="table no-border hover">
@@ -21,6 +21,7 @@
 						<th><strong>Durée du podcast</strong></th>
 						<th><strong>Categorie du podcast</strong></th>
 						<th><strong>Dernier de la categorie</strong></th>
+						<th><strong>Likes</strong></th>
 						<th><strong>Actions</strong></th>
 					</tr>
 				</thead>
@@ -31,6 +32,7 @@
 							<td><%- toMinutes(elem.duration) %></td>
 							<td><%= elem.category %></td>
 							<td><%= elem.last == true ? 'Oui' : 'Non' %></td>
+							<td><%= elem.liked %></td>
 							<td>
 								<a href="/edit/song/<%= elem._id %>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 								<span class="separator"></span>

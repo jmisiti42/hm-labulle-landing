@@ -36,7 +36,7 @@ const AudioController = function () {
 			return `${m}min ${(s / 100 * 60).toString().substring(0, 2)}`;
 		}
 		if (req && req.session && req.session.user && req.session.user.admin == true) {
-			Song.find().exec((err, songs) => {
+			Song.find().sort({ liked: -1 }).exec((err, songs) => {
 				params.songs = songs;
 				res.render('songs', params);
 			});
@@ -263,11 +263,19 @@ const AudioController = function () {
 
 	this.favoriteSong = (req, res) => {
 		if (!req.body.songName) return res.json({ error: "no song name" });
+		console.log(req.body.songName.replace(/\s/g,'').split('.')[0]);
 		User.findOne({ _id: req.session.user._id }).exec((err, _user) => {
 			if (err) return res.json({ error: err });
 			if (!_user) return res.json({ error: "no user found" });
-			let index = _user.likes.findIndex((elem) => { return elem.name == req.body.songName });
+			let index = _user.likes.findIndex((elem) => { return elem.name == req.body.songName.replace(/\s/g,'').split('.')[0] });
 			if (index > -1) {
+				Song.findOne({ fileName: req.body.songName }).exec((err, sng) => {
+					console.log("favorite disliked", err, sng);
+					if (sng) {
+						sng.liked--;
+						sng.save();
+					}
+				});
 				_user.likes.splice(index, 1);
 				_user.save((err, user) => {
 					if (err) { return res.json({ error: err }); }
@@ -278,7 +286,14 @@ const AudioController = function () {
 					}
 				});
 			} else {
-				_user.likes.push({ name: req.body.songName });
+				_user.likes.push({ name: req.body.songName.replace(/\s/g,'').split('.')[0] });
+				Song.findOne({ fileName: req.body.songName }).exec((err, sng) => {
+					console.log("favorite added", err, sng);
+					if (sng) {
+						sng.liked++;
+						sng.save();
+					}
+				});
 				_user.save((err, user) => {
 					if (err) { return res.json({ error: err }); }
 					else {

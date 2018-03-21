@@ -19,6 +19,10 @@ html {
     cursor: pointer;
 }
 
+#devicetable td {
+	background-color: #282828;
+}
+
 .separator {
 	border-right: 1px solid black;
 	margin-left: 5px;

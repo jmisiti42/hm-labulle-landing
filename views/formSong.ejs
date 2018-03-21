@@ -11,7 +11,7 @@
 	  <title>Backoffice</title>
   </head>
 	<body>
-		<div class="container">
+		<div class="container-fluid text-center">
 			<%- include header.ejs %>
 			<div class="row" style="font-size: 15px;">
 				<form ref='uploadForm' action="<%= typeof song._id !== 'undefined' ? '/edit/song/' + song._id : '/create/song' %>" encType="multipart/form-data" method="post">

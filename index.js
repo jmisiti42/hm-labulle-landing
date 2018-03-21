@@ -112,5 +112,8 @@ app.post('/repassword', authController.getPassword);
 //Update time read
 app.post('/updateTime', authController.isLoggedIn, audioController.updateTime);
 
+//STATS
+app.get('/users', authController.isLoggedIn, authController.isAdmin, boController.users);
+
 
 http.createServer(app).listen(5001, () => console.log(`Hello Marcel La Bulle listening on port 5001`));
