@@ -198,25 +198,8 @@ h3 {
 	font-size: 45px;
 }
 
-.mejs__button {
-	background-color: black;
-	z-index: 7000;
-}
-
-.mejs__button>button {
-	background-color: black;
-	z-index: 8000
-	margin-left: 0;
-	margin-right: 0;
-}
-
-.mejs__time, .mejs__time-rail {
-	background-color: black;
-	z-index: 8000
-}
-
-.mejs__time-rail {
-	margin-left: 0;
+.mejs__container {
+	text-align: center;
 }
 
 .presentationSong {
@@ -229,13 +212,12 @@ h3 {
 
 .titleSong {
 	font-size: 10px;
-	z-index: 0;
-	width: 150px;
-	padding-top: 18px;
+	z-index: 50;
+	padding-top: 8px;
+	width: 100%;
 	position: relative;
-	margin-right: 5px;
 	color: white;
-	z-index: 0;
+	text-align: left;
 	background-color: rgba(0, 0, 0, 0);
 }
 

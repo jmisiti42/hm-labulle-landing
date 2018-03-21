@@ -23,10 +23,10 @@
 		                    <option value="<%= category.name %>"><%= category.name %></option>
 		                <% }) %>
 					</select><br /><br />
-					Le podcast :<br />
-					<input class="col-xs-12" <%= typeof song.name !== 'undefined' ? '' : 'required' %> type="file" name="file" accept="audio/mp3"><br /><br />
-					Le pdf :<br />
-					<input class="col-xs-12" <%= typeof song.name !== 'undefined' ? '' : 'required' %> type="file" name="filePdf" accept="application/pdf"><br /><br />
+					Le podcast : (<%= typeof song.fileName !== 'undefined' ? song.fileName : ''  %>)<br />
+					<input title="<%= typeof song.fileName !== 'undefined' ? song.fileName : ''  %>" class="col-xs-12" <%= typeof song.name !== 'undefined' ? '' : 'required' %> type="file" name="file" accept="audio/mp3"><br /><br />
+					Le pdf : (<%= typeof song.pdfName !== 'undefined' ? song.pdfName : ''  %>)<br />
+					<input title="<%= typeof song.pdfName !== 'undefined' ? song.pdfName : ''  %>" class="col-xs-12" <%= typeof song.name !== 'undefined' ? '' : 'required' %> type="file" name="filePdf" accept="application/pdf"><br /><br />
 					Dernier podcast de la catégorie :<br />
 					<input type="checkbox" value="true" name="last" <%= typeof song.last !== 'undefined' ? song.last == true ? 'checked' : '' : '' %>><br /><br />
 					<input class="col-xs-offset-3 col-xs-6" type="submit" value="Envoyer" name="button" />
