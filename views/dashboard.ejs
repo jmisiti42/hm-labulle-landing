@@ -19,21 +19,27 @@
 			    <div class="col-sm-4">
 			        <div class="statCounter">
 			            <div class="title">Moyenne lecture episode</div>
-			            <div class="value"><%= moyenneLecture %></div>
+			            <div class="value percentage"><%= moyenneLecture %></div>
 			        </div>
 			    </div>
-			    <div class="col-sm-4">
-			        <div class="statCounter">
-			            <div class="title">Total lecture Concentration</div>
-			            <div class="value"><%= lectureConcentration %></div>
-			        </div>
-			    </div>
-			    <div class="col-sm-4">
-			        <div class="statCounter">
-			            <div class="title">Total lecture Autonomie</div>
-			            <div class="value"><%= lectureAutonomie %></div>
-			        </div>
-			    </div>
+			    <div class="col-sm-8">
+					<table class="table no-border hover">
+						<thead>
+							<tr>
+								<th><strong>Nom du podcast</strong></th>
+								<th><strong>Vues</strong></th>
+							</tr>
+						</thead>
+						<tbody>
+							<% counts.forEach((elem) => { %>
+								<tr>
+									<td><%= elem._id %></td>
+									<td><%= elem.count %></td>
+								</tr>
+							<% }); %>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 		<!-- Scripts JS -->
@@ -45,6 +51,7 @@
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script>
 			$(document).ready(() => {
+				$('.percentage').html(toPercentage($('.percentage').html() * 100));
 			});
 
 			const toPercentage = (number) => {

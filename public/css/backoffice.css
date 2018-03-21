@@ -19,6 +19,35 @@ html {
     cursor: pointer;
 }
 
+
+
+div.statCounter {
+	border: 1px solid #BBBBBB;
+	margin-right: 20px;
+	margin-left: 20px;
+	background-color: #F6F6F6;
+	border-radius: 20px;
+}
+
+div.statCounter div.title {
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #777777;
+	margin: 10px;
+	height: 40px;
+}
+
+
+div.statCounter div.value{
+	margin: 50px auto 50px;
+	font-size: 50px;
+	text-align: center;
+	text-transform: uppercase;
+	color: #3eec97;
+	font-weight: bold;
+}
+
 #devicetable td {
 	background-color: #282828;
 }

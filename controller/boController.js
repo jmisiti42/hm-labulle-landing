@@ -18,20 +18,16 @@ const BoController = function () {
 		if (req.session && req.session.user)
 			params.user = req.session.user;
 		Listened.aggregate([{ $group: { _id: '$name', count: { $sum: 1 } } }]).exec((err, result) => {
-			params.lectureConcentration += result.find((a) => { return a._id == "Ep. 1 Les connecter à eux-mêmes" }).count;
-			params.lectureConcentration += result.find((a) => { return a._id == "Ep. 2 Faire alliance avec votre enfant" }).count;
-			params.lectureConcentration += result.find((a) => { return a._id == "Ep. 3 L'importance de l'objectif" }).count;
-			params.lectureConcentration += result.find((a) => { return a._id == "Ep. 4 Laissez libre court aux mouvements" }).count;
-			params.lectureConcentration += result.find((a) => { return a._id == "Ep. 5 Le récap : tout ce qui est à retenir !" }).count;
-			params.lectureAutonomie += result.find((a) => { return a._id == "Ep. 1 L'autonomie, levier clé de la confiance en soi" }).count;
-			params.lectureAutonomie += result.find((a) => { return a._id == "Ep. 2 Des missions adaptées" }).count;
-			params.lectureAutonomie += result.find((a) => { return a._id == "Ep. 3 Parents, lâchez prise !" }).count;
-			params.lectureAutonomie += result.find((a) => { return a._id == "Ep. 4 Responsabilisez-les" }).count;
-
-			if (req && req.session && req.session.user && req.session.user.admin == true)
-				res.render('dashboard', params);
-			else
-				res.render('index', params);
+			params.counts = result;
+			Listened.count().exec((err, cnt) => {
+				User.count().exec((err, c) => {
+					params.moyenneLecture = cnt / c;
+					if (req && req.session && req.session.user && req.session.user.admin == true)
+						res.render('dashboard', params);
+					else
+						res.render('index', params);
+				});
+			});
 		});
 	};
 
