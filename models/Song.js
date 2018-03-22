@@ -7,6 +7,7 @@ var SongSchema = new mongoose.Schema({
 	pdfName: { type: String, required: true },
 	fileName: { type: String, required: true },
 	liked: { type: Number, default: 0 },
+	pdfViewed: { type: Number, default: 0 },
 	last: { type: Boolean, default: false }
 });
 

@@ -73,6 +73,8 @@ app.get('/user/:mail', authController.isLoggedIn, authController.isAdmin, boCont
 
 //List of all podcasts
 app.get('/songs', authController.isLoggedIn, authController.isAdmin, audioController.showView);
+//Add to pdf read count
+app.post('/pdfread/song', authController.isLoggedIn, audioController.addCountToPdf)
 //create new song
 app.post('/create/song', authController.isLoggedIn, authController.isAdmin, audioController.createSong);
 //create new song

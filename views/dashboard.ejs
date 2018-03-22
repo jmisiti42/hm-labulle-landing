@@ -18,11 +18,29 @@
 			<div class="row">
 			    <div class="col-sm-4">
 			        <div class="statCounter">
-			            <div class="title">Moyenne lecture episode</div>
-			            <div class="value percentage"><%= moyenneLecture %></div>
+			            <div class="title">En moyenne un utilisateur écoute</div>
+			            <div class="value"><%= moyenneEcoute %></div>
+			            <div class="title">podcasts</div>
 			        </div>
 			    </div>
-			    <div class="col-sm-8">
+			    <div class="col-sm-4">
+			        <div class="statCounter">
+			            <div class="title">Taux de lecture moyen</div>
+			            <div class="value"><%= moyenneLecture %></div>
+			            <div class="title">des podcasts</div>
+			        </div>
+			    </div>
+			    <div class="col-sm-4">
+			        <div class="statCounter">
+			            <div class="title">Taux d'utilisateurs mobile</div>
+			            <div class="value"><%= moyenneDevice %></div>
+			            <div class="title"></div>
+			        </div>
+			    </div>
+			</div>
+			<br />
+			<div class="row">
+			    <div class="col-sm-12">
 					<table class="table no-border hover">
 						<thead>
 							<tr>
@@ -51,12 +69,11 @@
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script>
 			$(document).ready(() => {
-				$('.percentage').html(toPercentage($('.percentage').html() * 100));
+				// $('.percentage').each((index) => {
+				// 	console.log($(this));
+				// 	$(this).html(toPercentage(10 * 100))
+				// });
 			});
-
-			const toPercentage = (number) => {
-				return `${number.toString().charAt(0)}${number.toString().charAt(1) == "." ? "" : number.toString().charAt(1)}%`
-			};
 		</script>
 	</body>
 </html>

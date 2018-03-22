@@ -98,6 +98,13 @@ const AudioController = function () {
 		});
 	};
 
+	this.addCountToPdf = (req, res) => {
+		Song.findOneAndUpdate({ _id : req.body.id }, { $inc : { 'pdfViewed' : 1 } }).exec((err, result) => {
+			if (err) return res.json(err);
+			return res.json(result);
+		});
+	};
+
 	this.updateTime = (req, res) => {
 		User.findOne({ _id: req.session.user._id }).exec((err, _user) => {
 			if (err) return res.json({ "error": true });
