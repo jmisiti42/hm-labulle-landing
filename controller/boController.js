@@ -7,6 +7,7 @@ const User 					= mongoose.model('User');
 const Device 				= mongoose.model('Device');
 const Listened 				= mongoose.model('Listened');
 const hasha 				= require('hasha');
+const dateFormat 			= require('dateformat');
 const ipAddress 			= new Array();
 
 const BoController = function () {
@@ -53,6 +54,7 @@ const BoController = function () {
 		        Listened.count({ idReader: user._id, timestamp: { $gte: beginDate, $lt: endDate } })
 		            .then( count => ({
 		                mail: user.mail,
+						created_at: dateFormat(user.created_at, 'dd/mm/yyyy'),
 		                count: count
 		            }))
 		    );

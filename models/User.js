@@ -15,12 +15,19 @@ var UserSchema = new mongoose.Schema({
 	}],
 	admin: { type: Boolean, default: false },
 	likes: [{ name: String, _id: false }],
+	created_at: { type: Date },
 	resetToken: { type: String }
 });
 
 const hash = (pwd) => {
 	return hasha(pwd, {algorithm: 'whirlpool'});
 }
+
+UserSchema.pre('save', function(next) {
+    if (!this.created_at) {
+		this.created_at = new Date();
+	}
+});
 
 UserSchema.methods.updateOrCreate = function (userId, name, time, duration, cb) {
 	if (!this.timeRead) this.timeRead = new Array();

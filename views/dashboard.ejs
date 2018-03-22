@@ -46,6 +46,7 @@
 							<tr>
 								<th><strong>Nom du podcast</strong></th>
 								<th><strong>Vues</strong></th>
+								<th><strong>Taux de lecture</strong></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -53,6 +54,7 @@
 								<tr>
 									<td><%= elem._id %></td>
 									<td><%= elem.count %></td>
+									<td><%= (elem.percentage / elem.count) %>%</td>
 								</tr>
 							<% }); %>
 						</tbody>
