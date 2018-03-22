@@ -186,7 +186,7 @@
 								<div class="row">
 									<div onclick="songClicked(`<%= song.fileName %>`);" class="song col-xs-1"><i class="fa <% if (typeof user !== 'undefined') { %>fa-play-circle<% } else { %>fa-lock<% } %>" aria-hidden="true"></i></div>
 									<div onclick="songClicked(`<%= song.fileName %>`);" class="song <%= typeof user !== 'undefined' ? 'col-xs-9' : 'col-xs-11' %>"><p style="font-size: 14px;"><%= song.name %> - <%- toMinutes(song.duration) %>
-										<div class="whiteloadingbar"><% if (typeof timeRead !== 'undefined') { %><div class="greenloadingbar <%- song.fileName.replace(/\s/g,'').split('.')[0] %>gb" style="width: <%= (timeRead.time / timeRead.duration) * 100 %>%;"></div><% } %></div></p>
+										<div class="whiteloadingbar"><div class="greenloadingbar <%- song.fileName.replace(/\s/g,'').split('.')[0] %>gb" style="<% if (typeof timeRead !== 'undefined') { %>width: <%= (timeRead.time / timeRead.duration) * 100 %>%;<% } %>"></div></div></p>
 									</div>
 									<% if (typeof user !== 'undefined') { %>
 										<div class="col-xs-1 song"><i onclick="favorite(`<%= song.fileName %>`)" class="fa fa-heart heartsong <%- song.fileName.replace(/\s/g,'').split('.')[0]; %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i></div>
