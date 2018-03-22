@@ -30,7 +30,7 @@ const BoController = function () {
 					params.moyenneLecture = toPercentage((lecture / result.length) * 100);
 					params.moyenneEcoute = ((rs[0].count / rs[0].ct) + "").charAt(0) + ((rs[0].count / rs[0].ct) + "").charAt(1) + ((rs[0].count / rs[0].ct) + "").charAt(2);
 					if (req && req.session && req.session.user && req.session.user.admin == true)
-						setTimeout(() => { res.render('dashboard', params) }, 1000);
+						res.render('dashboard', params);
 					else
 						res.render('index', params);
 				});

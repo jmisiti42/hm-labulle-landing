@@ -40,7 +40,7 @@ UserSchema.methods.updateOrCreate = function (userId, name, time, duration, cb) 
 	else
 		this.timeRead.push({ name, time, duration });
 
-	Listened.findOne({ idReader: userId }).exec((err, listened) => {
+	Listened.findOne({ idReader: userId, name }).exec((err, listened) => {
 		if (err) console.log(err);
 		if (!listened) {
 			let lst = new Listened();

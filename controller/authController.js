@@ -117,12 +117,12 @@ const AuthController = function () {
 				usr.mail = req.body.mail;
 				usr.save((err) => {
 					req.session.destroy((err) => {
-						return o.showView(req, res, { msgOk: ["Votre addresse mail a bien été modifié !"] });
+						return o.showView(req, res, { msgOk: ["Votre adresse mail a bien été modifié !"] });
 					});
 				});
 			});
 		} else {
-			o.showView(req, res, { msg: ["Veuillez renseigner une nouvelle addresse mail valide."] });
+			o.showView(req, res, { msg: ["Veuillez renseigner une nouvelle adresse mail valide."] });
 		}
 	};
 
@@ -168,7 +168,7 @@ const AuthController = function () {
 			else {
 				User.findOne({ mail: req.body.mail }).exec((err, usr) => {
 					if (err) res.json({error : err.message});
-					if (!usr) res.json({ error: "Aucun compte ne possède cette addresse mail."});
+					if (!usr) res.json({ error: "Aucun compte ne possède cette adresse mail."});
 					else {
 						ipAddress[ip] = setTimeout(() => { ipAddress[ip] = null; }, 120 * 1000 * 60);
 						code = ip.charAt(0) + uuid();
@@ -212,7 +212,7 @@ const AuthController = function () {
 				req.body.password = pwd;
 				User.findOne({ mail: req.body.mail }).exec((err, usr) => {
 					if (err) { o.showView(req, res, { msg: [err.message] }); }
-					else if (usr) { o.showView(req, res, { msg: ["Un compte utilise déjà cette addresse mail !"] }); }
+					else if (usr) { o.showView(req, res, { msg: ["Un compte utilise déjà cette adresse mail !"] }); }
 					else {
 						new User(req.body).save((error, userSaved) => {
 							if (error) { o.showView(req, res, { msg: [error.message] }); }
@@ -280,7 +280,7 @@ const validateEmail = (email) => {
 const verifyFields = (req) => {
 	let errors = new Array();
 	if (!req.body.mail || !validateEmail(req.body.mail))
-		errors.push('Veuillez entrer une addresse e-mail valide.');
+		errors.push('Veuillez entrer une adresse e-mail valide.');
 	if (!req.body.password)
 		errors.push('Veuillez renseigner votre mot de passe.');
 	return errors;
