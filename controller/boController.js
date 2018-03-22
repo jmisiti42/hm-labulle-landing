@@ -18,7 +18,7 @@ const BoController = function () {
 			params = {};
 		if (req.session && req.session.user)
 			params.user = req.session.user;
-		Listened.aggregate([{ $group: { _id: '$name', count: { $sum: 1 }, percentage: { $sum: "$readed" } } }]).exec((err, result) => {
+		Listened.aggregate([{ $group: { _id: '$name', count: { $sum: 1 }, percentage: { $avg: "$readed" } } }]).exec((err, result) => {
 			params.counts = result;
 			User.aggregate([{ "$project": { "s": { "$size": "$timeRead" } }}, {$group: { _id: '$name', count: {$sum: "$s"}, ct: { $sum: 1 } }}]).exec((err, rs) => {
 				let lecture = 0;
