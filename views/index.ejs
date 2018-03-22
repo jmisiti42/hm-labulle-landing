@@ -253,8 +253,10 @@
 
 			const sendTimeToServer = () => {
 				$('.' + time.name.replace(/\s/g,'').split('.')[0] + 'gb').css('width', (time.time / time.duration) * 100 + '%');
+				let index = user.timeRead.findIndex((el) => { return el.name == time.name });
+				if (index > -1)
+					user.timeRead[index] = time;
 				$.post('/updateTime', time, (data) => {
-					console.log("ok");
 				});
 			};
 
