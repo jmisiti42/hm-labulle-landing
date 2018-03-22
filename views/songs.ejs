@@ -22,6 +22,7 @@
 						<th><strong>Categorie du podcast</strong></th>
 						<th><strong>Dernier de la categorie</strong></th>
 						<th><strong>Likes</strong></th>
+						<th><strong>Ouverture pdf</strong></th>
 						<th><strong>Actions</strong></th>
 					</tr>
 				</thead>
@@ -33,6 +34,7 @@
 							<td><%= elem.category %></td>
 							<td><%= elem.last == true ? 'Oui' : 'Non' %></td>
 							<td><%= elem.liked %></td>
+							<td><%= elem.pdfViewed %></td>
 							<td>
 								<a href="/edit/song/<%= elem._id %>"><i class="fa fa-pencil" aria-hidden="true"></i></a>
 								<span class="separator"></span>
