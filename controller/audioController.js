@@ -270,19 +270,12 @@ const AudioController = function () {
 
 	this.favoriteSong = (req, res) => {
 		if (!req.body.songName) return res.json({ error: "no song name" });
-		console.log(req.body.songName.replace(/\s/g,'').split('.')[0]);
 		User.findOne({ _id: req.session.user._id }).exec((err, _user) => {
 			if (err) return res.json({ error: err });
 			if (!_user) return res.json({ error: "no user found" });
 			let index = _user.likes.findIndex((elem) => { return elem.name == req.body.songName.replace(/\s/g,'').split('.')[0] });
 			if (index > -1) {
-				Song.findOne({ fileName: req.body.songName }).exec((err, sng) => {
-					console.log("favorite disliked", err, sng);
-					if (sng) {
-						sng.liked--;
-						sng.save();
-					}
-				});
+				Song.findOneAndUpdate({ fileName: req.body.songName }, { $inc : { 'liked' : -1 } }).exec((err, result) => {});
 				_user.likes.splice(index, 1);
 				_user.save((err, user) => {
 					if (err) { return res.json({ error: err }); }
@@ -294,13 +287,7 @@ const AudioController = function () {
 				});
 			} else {
 				_user.likes.push({ name: req.body.songName.replace(/\s/g,'').split('.')[0] });
-				Song.findOne({ fileName: req.body.songName }).exec((err, sng) => {
-					console.log("favorite added", err, sng);
-					if (sng) {
-						sng.liked++;
-						sng.save();
-					}
-				});
+				Song.findOneAndUpdate({ fileName: req.body.songName }, { $inc : { 'liked' : 1 } }).exec((err, result) => {});
 				_user.save((err, user) => {
 					if (err) { return res.json({ error: err }); }
 					else {

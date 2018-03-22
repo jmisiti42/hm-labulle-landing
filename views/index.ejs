@@ -133,7 +133,7 @@
 						<div style="position: absolute; height: 100%; width: 20%;" class="visible-md visible-xl visible-lg"><img style="position: absolute; bottom: -20px;" class="hm-logo" src="../images/hm-logo.jpg" /></div> <!-- LOGO -->
 						<div class="col-md-9 greenborder firstBulle">
 							<div class="visible-xs visible-sm" style="margin: auto;width: 100px"><img class="hm-logo" src="../images/hm-logo.jpg" /></div>
-							<div class="white"><p><h1 style="font-size: 18px;"><b style="font-family: brandon;">BIENVENUE DANS LA BULLE HELLO MARCEL, LE COACH AUDIO EN PARENTALITE</b></h1><br />Parce que quand on est parents, on a plein de questions et peu de temps pour y répondre, nous avons imaginé La Bulle Hello Marcel : des programmes audio courts qui s’adressent à tous les parents et traiteront de thèmes variés (autonomie, développement de la créativité, sommeil, concentration et canalisation de l’énergie ou encore relations dans la fratrie…).<br /><br />En quelques minutes, chaque écoute vous apporte un décryptage et des clés essentielles pour faire votre propre chemin avec vos enfants, sur le thème choisi.<br /><br />Bonne écoute !</p></div>
+							<div class="white"><p><h1 style="font-size: 18px;">Parce que quand on est parents, on a plein de questions et peu de temps pour y répondre, nous avons imaginé La Bulle Hello Marcel : des programmes audio courts qui s’adressent à tous les parents et traiteront de thèmes variés (autonomie, développement de la créativité, sommeil, concentration et canalisation de l’énergie ou encore relations dans la fratrie…). Et pour commencer, nous avons traité deux thèmes incontournables : la concentration et l'autonomie.<br />En quelques minutes, chaque écoute vous apportera un décryptage et des clés essentielles pour faire votre propre chemin avec vos enfants, sur le thème choisi.<br /><br />Bonne écoute !</p></div>
 							<div style="margin-top: -25px;" class="text-center row">
 								<span class="presentations" onclick="songClicked(`presentation.mp3`);"><i class="fa fa-play-circle" style="padding-top: 5px; color: #51E99D; font-size: 40px;" aria-hidden="true"></i><span style="position: relative; bottom: 10px; left: 5px;">Intro à La Bulle</span>&nbsp;</span>
 							</div>
@@ -186,7 +186,7 @@
 								<div class="row">
 									<div onclick="songClicked(`<%= song.fileName %>`);" class="song col-xs-1"><i class="fa <% if (typeof user !== 'undefined') { %>fa-play-circle<% } else { %>fa-lock<% } %>" aria-hidden="true"></i></div>
 									<div onclick="songClicked(`<%= song.fileName %>`);" class="song <%= typeof user !== 'undefined' ? 'col-xs-9' : 'col-xs-11' %>"><p style="font-size: 14px;"><%= song.name %> - <%- toMinutes(song.duration) %>
-										<div class="whiteloadingbar"><% if (typeof timeRead !== 'undefined') { %><div class="greenloadingbar" id="loadingbar<%= timeRead %>" style="width: <%= (timeRead.time / timeRead.duration) * 100 %>%;"></div><% } %></div></p>
+										<div class="whiteloadingbar"><% if (typeof timeRead !== 'undefined') { %><div class="greenloadingbar <%- song.fileName.replace(/\s/g,'').split('.')[0] %>gb" style="width: <%= (timeRead.time / timeRead.duration) * 100 %>%;"></div><% } %></div></p>
 									</div>
 									<% if (typeof user !== 'undefined') { %>
 										<div class="col-xs-1 song"><i onclick="favorite(`<%= song.fileName %>`)" class="fa fa-heart heartsong <%- song.fileName.replace(/\s/g,'').split('.')[0]; %> <%= liked > -1 ? 'mejs_liked' : 'mejs_like' %>" aria-hidden="true"></i></div>
@@ -252,6 +252,7 @@
 			});
 
 			const sendTimeToServer = () => {
+				$('.' + time.name.replace(/\s/g,'').split('.')[0] + 'gb').css('width', (time.time / time.duration) * 100 + '%');
 				$.post('/updateTime', time, (data) => {
 					console.log("ok");
 				});

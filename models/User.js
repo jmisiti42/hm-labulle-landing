@@ -27,6 +27,7 @@ UserSchema.pre('save', function(next) {
     if (!this.created_at) {
 		this.created_at = new Date();
 	}
+	next();
 });
 
 UserSchema.methods.updateOrCreate = function (userId, name, time, duration, cb) {
