@@ -26,13 +26,19 @@ const BoController = function () {
 					lecture += el.percentage / el.count;
 				});
 				Device.aggregate([{ $group: { _id: '$device', count: { $sum: 1 } } }]).exec((err, resultat) => {
-					params.moyenneDevice = toPercentage(resultat[0].count / (resultat[1].count + resultat[0].count) * 100)
-					params.moyenneLecture = toPercentage((lecture / result.length) * 100);
-					params.moyenneEcoute = ((rs[0].count / rs[0].ct) + "").charAt(0) + ((rs[0].count / rs[0].ct) + "").charAt(1) + ((rs[0].count / rs[0].ct) + "").charAt(2);
-					if (req && req.session && req.session.user && req.session.user.admin == true)
-						res.render('dashboard', params);
-					else
-						res.render('index', params);
+					params.toPercentage = (number) => {
+						return `${number.toString().charAt(0)}${number.toString().charAt(1) == "." ? "" : number.toString().charAt(1)}%`
+					};
+					Listened.count().exec((err, total) => {
+						params.listenedsCount = total;
+						params.moyenneDevice = toPercentage(resultat[0].count / (resultat[1].count + resultat[0].count) * 100)
+						params.moyenneLecture = toPercentage((lecture / result.length) * 100);
+						params.moyenneEcoute = ((rs[0].count / rs[0].ct) + "").charAt(0) + ((rs[0].count / rs[0].ct) + "").charAt(1) + ((rs[0].count / rs[0].ct) + "").charAt(2);
+						if (req && req.session && req.session.user && req.session.user.admin == true)
+							res.render('dashboard', params);
+						else
+							res.render('index', params);
+					});
 				});
 			});
 		});

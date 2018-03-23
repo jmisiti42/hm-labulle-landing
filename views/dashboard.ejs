@@ -42,6 +42,7 @@
 			<div class="row">
 			    <div class="col-sm-12">
 					<table class="table no-border hover">
+						<p><h3 style="color: black;">Total podcasts lue : <b><%= listenedsCount %></b></h3></p>
 						<thead>
 							<tr>
 								<th><strong>Nom du podcast</strong></th>
@@ -54,7 +55,7 @@
 								<tr>
 									<td><%= elem._id %></td>
 									<td><%= elem.count %></td>
-									<td><%= elem.percentage %>%</td>
+									<td><%- toPercentage(elem.percentage) %></td>
 								</tr>
 							<% }); %>
 						</tbody>
@@ -71,10 +72,6 @@
 		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 		<script>
 			$(document).ready(() => {
-				// $('.percentage').each((index) => {
-				// 	console.log($(this));
-				// 	$(this).html(toPercentage(10 * 100))
-				// });
 			});
 		</script>
 	</body>
