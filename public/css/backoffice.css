@@ -48,7 +48,7 @@ div.statCounter div.value{
 	font-weight: bold;
 }
 
-#devicetable td {
+#devicetable td, .modal-body table td {
 	background-color: #282828;
 }
 
