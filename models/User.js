@@ -49,7 +49,7 @@ UserSchema.methods.updateOrCreate = function (userId, name, time, duration, cb) 
 			lst.readed = time / duration * 100;
 			lst.save((err) => { if (err) console.log("errors :", err); });
 		} else {
-			listened.readed = time / duration * 100;
+			listened.readed = (time / duration * 100) > listened.readed ? (time / duration * 100) : listened.readed;
 			listened.save((err) => { if (err) console.log("errors :", err); });
 		}
 	});

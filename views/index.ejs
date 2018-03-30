@@ -254,14 +254,15 @@
 
 				$('.categoryDesc').height(getMaxHeight('.categoryDesc'));
 			});
-
-			$(window).bind('beforeunload',function(){
+			window.onbeforeunload = closingCode;
+			function closingCode(){
 				if (time != null)
 					sendTimeToServer();
 				else {
 					console.log("time null : ", time);
 				}
-			});
+			   return null;
+			}
 
 			const sendTimeToServer = () => {
 				$('.' + time.name.replace(/\s/g,'').split('.')[0] + 'gb').css('width', (time.time / time.duration) * 100 + '%');
