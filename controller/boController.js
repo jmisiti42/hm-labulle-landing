@@ -27,7 +27,7 @@ const BoController = function () {
 				});
 				Device.aggregate([{ $group: { _id: '$device', count: { $sum: 1 } } }]).exec((err, resultat) => {
 					params.toPercentage = (number) => {
-						return `${number.toString().charAt(0)}${number.toString().charAt(1) == "." ? "" : number.toString().charAt(1)}%`
+						return `${number.toString().charAt(0)}${number.toString().charAt(1) == "." ? "" : number.toString().charAt(1)}${number.toString().charAt(2) == "." ? "" : number.toString().charAt(2)}%`
 					};
 					Listened.count().exec((err, total) => {
 						params.listenedsCount = total;

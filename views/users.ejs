@@ -185,7 +185,7 @@
 			});
 
 			const toPercentage = (number) => {
-				return `${number.toString().charAt(0)}${number.toString().charAt(1) == "." ? "" : number.toString().charAt(1)}%`
+				return `${number.toString().charAt(0)}${number.toString().charAt(1) == "." ? "" : number.toString().charAt(1)}${number.toString().charAt(2) == "." ? "" : number.toString().charAt(2)}%`
 			};
 		</script>
 	</body>
